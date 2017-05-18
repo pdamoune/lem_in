@@ -6,11 +6,11 @@
 #    By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 11:25:43 by pdamoune          #+#    #+#              #
-#    Updated: 2017/05/05 20:06:51 by pdamoune         ###   ########.fr        #
+#    Updated: 2017/05/15 11:02:22 by pdamoune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	players/pdamoune.filler
+NAME	=	lem_in
 SOURCES	=
 CFLAGS	=	-Wall -Wextra -Werror
 NOFLAGS =	-Wno-format
@@ -23,6 +23,9 @@ all: project
 
 project:
 		@make -C $(PATHPRO)
+
+run:	project
+		./$(NAME) < data
 
 clean:
 		@make clean -C $(PATHPRO)
