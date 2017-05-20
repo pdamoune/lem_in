@@ -6,91 +6,106 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 11:00:18 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/05/18 05:11:40 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/05/20 05:43:00 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lem_in.h"
 
-void 	ft_del(void *ptr, size_t size)
+int		lem_iscom(char *line)
 {
-	ft_bzero(ptr, size);
-	free(ptr);
+
+	if (!line)
+		return (-1);
+	if (!ft_strncmp(line, "##end", 6))
+		return (END);
+	if (!ft_strncmp(line, "##start", 8))
+		return (START);
+	if (line[0] == '#')
+		return (COM);
+	return (NOT_COM);
 }
 
-int 	lem_get_coms(t_list *list, char *line)
+int		lem_is_room(t_room *room, char *line)
 {
-	if (line[0] == '#')
-	{
-		if (!ft_strncmp(&line[1], "#start", 6))
-		{
-			list = list->next;
-			lem_get_coms(list, list->content);
-			return (START);
-		}
-		if (!ft_strncmp(&line[1], "#end", 4))
-		{
-			list = list->next;
-			lem_get_coms(list, list->content);
-			return (END);
-		}
-		return (3);
-	}
-	(void)&list;
+	int		len;
+
+	len = ft_strlen(line);
+	while (line[--len] == ' ')
+		;
+	line[++len] = 0;
+	while (ft_isdigit(line[--len]))
+		;
+	if (line[len] != ' ' || !ft_isint(&line[++len]))
+		return (0);
+	room->y = ft_atoi(&line[len]);
+	line[--len] = 0;
+	while (ft_isdigit(line[--len]))
+		;
+	if (!ft_isint(&line[++len]))
+		return (0);
+	room->x = ft_atoi(&line[len]);
+	line[--len] = 0;
+	room->name = line;
+	return (1);
+}
+
+int		lem_get_links(t_list **l_links, t_list *data, t_list *l_rooms)
+{
+
 	return (0);
 }
 
-int		lem_get_coordonnee(char *line, int *len)
-{
-	int		coordonnee;
-
-	if (!ft_isdigit(line[*len]))
-		return (-1);
-	while (ft_isdigit(line[*len]))
-		(*len)--;
-	coordonnee = ft_atoi(&line[*len]);
-	while (ft_isspace(line[*len]))
-		(*len)--;
-	if (line[*len + 1] != ' ')
-		return (-1);
-	ft_bzero(&line[*len + 1], ft_strlen(&line[*len]));
-	return (coordonnee);
-}
-
-t_room 	*lem_get_rooms(t_list **rooms, char *line)
+int		lem_get_rooms(t_list *data, t_list **l_rooms)
 {
 	t_list	*tmp;
 	t_room	*room;
-	int		len;
+	char	*line;
+	int		com;
+	int		rooms;
 
+	com = 0;
+	rooms = 0;
 	room = ft_memalloc(sizeof(t_room));
-	len = ft_strlen(line) - 1;
-	room->y = lem_get_coordonnee(line, &len);
-	room->x = lem_get_coordonnee(line, &len);
-	room->name = line;
-	tmp = ft_lstnew(room, sizeof(t_room));
-	!*rooms ? *rooms = tmp : ft_lstadd_last(*rooms, tmp);
-	return (room);
+	while ((data = data->next))
+	{
+		if ((com = lem_iscom(data->content)))
+		{
+			if (com > 1)
+				room->pos = com;
+			continue ;
+		}
+		if (!lem_is_room(room, (line = ft_strdup(data->content))))
+		{
+			ft_strdel(&line);
+			continue ;
+		}
+		tmp = ft_lstnew(room, sizeof(t_room));
+		!*l_rooms ? *l_rooms = tmp : ft_lstadd_last(*l_rooms, tmp);
+		room->pos ? (rooms |= (room->pos - 1)) : 0;
+		room = ft_memalloc(sizeof(t_room));
+	}
+	return (rooms);
 }
 
-int 	lem_get_links(t_list **links, t_list *rooms, char *line)
+int		lem_get_ants(t_list *data)
 {
-	t_link	*link;
-	int		i;
+	char	*line;
+	int		ret;
 
-	link = ft_memalloc(sizeof(t_link));
-	i = 0;
-	if (!ft_strchr(line, '-'))
-		return (-1);
-	while (line[i] && line[i] != '-')
-			i++;
-	link->room2 = ft_strdup(&line[i + 1]);
-	line[i] = 0;
-	link->room1 = ft_strdup(line);
-	(void)&line;
-	(void)&rooms;
-	(void)&links;
-	return (1);
+	line = data->content;
+	while (data && lem_iscom(line))
+	{
+		data = data->next;
+		line = data->content;
+	}
+	if (ft_isint(line) > 0)
+	{
+		ret = ft_atoi(line);
+		return (ret);
+	}
+	errno |= BAD_ANTS;
+	return (-1);
 }
 
 void	lem_get_lines(t_list **list)
@@ -109,25 +124,27 @@ void	lem_get_lines(t_list **list)
 	}
 }
 
-int		lem_parsing(t_list *l_rooms, t_list *l_links, int *nb_ants)
+int		lem_parsing(t_list *l_rooms, t_list *l_links, int *ants)
 {
-	t_list	*list;
+	t_list	*data;
+	t_room	*room;
 
-	list = NULL;
-	l_rooms = NULL;
-	lem_get_lines(&list);
-	lem_get_rooms(&l_rooms, list->content);
-	lem_get_links(&l_links, l_rooms, list->content);
-	ft_putnbrel(ft_atoi("-999999999999999999999999999"));
+	data = NULL;
+	lem_get_lines(&data);
+	*ants = lem_get_ants(data);
+	lem_get_rooms(data, &l_rooms);
+	lem_get_links(&l_links, data, l_rooms);
 	while (l_rooms)
 	{
-		ft_putendl(((t_room *)l_rooms->content)->name);
-		ft_putnbrel(((t_room *)l_rooms->content)->x);
-		ft_putnbrel(((t_room *)l_rooms->content)->y);
+		room = l_rooms->content;
+		ft_printf("name = |%s|\n", room->name);
+		ft_printf("pos  = |%d|\n", room->pos);
+		ft_printf("x    = |%d|\n", room->x);
+		ft_printf("y    = |%d|\n===============\n", room->y);
 		l_rooms = l_rooms->next;
 	}
-	// (void)&links;
-	// (void)&rooms;
-	(void)&nb_ants;
-	return (0);
+
+	(void)&l_links;
+	(void)&l_rooms;
+	return (-1);
 }
