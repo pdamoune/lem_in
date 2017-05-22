@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:42:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/05/20 03:27:20 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/05/22 22:30:47 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,18 @@
 # define BAD_ANTS		(1 << 2)
 // # define ERROR
 
+typedef struct s_data	t_data;
 typedef struct s_room	t_room;
 typedef struct s_link	t_link;
+
+struct		s_data
+{
+	int		ants;
+	char	**legend;
+	int		map[2];
+	t_list	*list_rooms;
+	t_list	*list_links;
+};
 
 struct		s_room
 {
@@ -40,6 +50,6 @@ struct		s_link
 
 
 int		main(void);
-int		lem_parsing(t_list *rooms, t_list *links, int *nb_ants);
+int		lem_parsing(t_data *data, t_list *l_rooms, t_list *l_links, int *ants);
 
 #endif

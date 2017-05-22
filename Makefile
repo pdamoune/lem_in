@@ -6,7 +6,7 @@
 #    By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 11:25:43 by pdamoune          #+#    #+#              #
-#    Updated: 2017/05/15 11:02:22 by pdamoune         ###   ########.fr        #
+#    Updated: 2017/05/22 20:54:21 by pdamoune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ CC		=	gcc
 PATHLIB	=	1/libft
 PATHINC	=	include
 PATHPRO	=	1
+CUR_DIR = $(shell pwd)
 
 all: project
 
@@ -25,7 +26,7 @@ project:
 		@make -C $(PATHPRO)
 
 run:	project
-		./$(NAME) < data
+		./lem_in < data
 
 clean:
 		@make clean -C $(PATHPRO)
