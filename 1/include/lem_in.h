@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:42:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/05/22 22:30:47 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/05/23 15:09:14 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ typedef struct s_link	t_link;
 struct		s_data
 {
 	int		ants;
-	char	**legend;
 	int		map[2];
+	char	**graph;
+	t_list	*list_data;
 	t_list	*list_rooms;
 	t_list	*list_links;
 };
@@ -50,6 +51,6 @@ struct		s_link
 
 
 int		main(void);
-int		lem_parsing(t_data *data, t_list *l_rooms, t_list *l_links, int *ants);
+int		lem_parsing(t_data *data);
 
 #endif
