@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 11:00:18 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/05/23 16:01:20 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/05/30 14:48:20 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,60 +193,6 @@ int		lem_get_ants(t_list *data, int *ants)
 	return (0);
 }
 
-
-
-void 	lem_display(t_data *all_data, t_list *datas, t_list *rooms, t_list *links, int i)
-{
-	t_room	*room;
-	t_link	*link;
-	t_data	*data;
-
-	if (i & (1 << 2))
-	{
-		ft_printf("---- datas ----\n");
-		while (datas)
-		{
-			data = datas->content;
-			ft_printf("name = |%s|\n", datas->content);
-			datas = datas->next;
-		}
-		ft_printf("map[x] = |%d|\n", all_data->map[0]);
-		ft_printf("map[y] = |%d|\n", all_data->map[1]);
-	}
-
-	if (i & (1 << 1))
-	{
-		ft_printf("---- rooms ----\n");
-		while (rooms)
-		{
-			room = rooms->content;
-			room->pos == 0 ? ft_printf("pos  = |%d|       x = %2d  /  y = %2d\n", room->pos, room->x, room->y) : 0;
-			room->pos == 2 ? ft_printf("pos  = |START|   x = %2d  /  y = %2d\n", room->x, room->y) : 0;
-			room->pos == 3 ? ft_printf("pos  = |END|     x = %2d  /  y = %2d\n", room->x, room->y) : 0;
-			rooms = rooms->next;
-		}
-	}
-
-	if (i & (1 << 0))
-	{
-		ft_printf("---- links ----\n");
-		while (links)
-		{
-			link = links->content;
-			ft_printf("room1 =  |%s - ", link->room1);
-			ft_printf("%s|  = room2\n", link->room2);
-			links = links->next;
-		}
-	}
-	ft_putendl("");
-	if (i & 1 << 3)
-	{
-		int j = -1;
-		while (all_data->graph[++j])
-			ft_printf("|%s|\n", all_data->graph[j]);
-	}
-}
-
 int		lem_get_graph(t_data *data, t_list *rooms, t_list *links)
 {
 	int		i;
@@ -285,7 +231,6 @@ int		lem_parsing(t_data *data)
 	ft_printf("retour get_rooms = %d\n", lem_get_rooms(data, data->list_data, &data->list_rooms));
 	ft_printf("retour get_links = %d\n", lem_get_links(data, data->list_data, data->list_rooms, &data->list_links));
 	lem_get_graph(data, data->list_rooms, data->list_links);
-	lem_display(data, data->list_data, data->list_rooms, data->list_links, 0b0001);
 	// while (l_rooms)
 	// {
 	// 	room = l_rooms->content;
@@ -297,5 +242,5 @@ int		lem_parsing(t_data *data)
 
 	// (void)&l_links;
 	// (void)&l_rooms;
-	return (-1);
+	return (1);
 }
