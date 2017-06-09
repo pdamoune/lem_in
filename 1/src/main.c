@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:41:26 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/09 19:48:40 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/10 01:02:48 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-t_room	*lem_get_starts(t_list *rooms)
+t_room	*lem_get_start(t_list *rooms)
 {
 	t_room	*tmp;
 
@@ -64,10 +64,13 @@ t_room	*lem_get_first_path(t_list *rooms, t_list *links, char *start)
 			if (!room->busy)
 				return (room);
 		}
+		if (!tmp->next)
+		{
+
+		}
 		tmp = tmp->next;
 	}
-	(void)&rooms;
-	(void)&links;
+
 	return (NULL);
 }
 
@@ -77,11 +80,10 @@ int		lem_get_paths(t_list *paths, t_list *rooms, t_list *links)
 	t_room	*tmp;
 	char	*name;
 
-	tmp = lem_get_starts(rooms);
+	tmp = lem_get_start(rooms);
 	tmp->busy = 1;
-	lst_tmp = ft_lstnew(tmp, sizeof(t_room *));
+	lst_tmp = ft_lstptr(tmp);
 	paths = lst_tmp;
-	// lem_get_shorter_path(rooms, links, ((t_room *)starts->content)->name);
 	while (paths)
 	{
 		name = ((t_room *)paths->content)->name;
@@ -93,13 +95,16 @@ int		lem_get_paths(t_list *paths, t_list *rooms, t_list *links)
 		{
 			ft_printf("name = %s\n", tmp->name);
 			if (tmp->pos == END)
+			{
 				ft_printf("END\n");
+			}
 			tmp->busy = 1;
-			lst_tmp = ft_lstnew(tmp, sizeof(t_room *));
+			lst_tmp = ft_lstptr(tmp);
 			paths->next = lst_tmp;
 		}
 		paths = paths->next;
 	}
+
 	return (0);
 }
 
@@ -108,8 +113,7 @@ int		main(void)
 	t_data	data;
 
 	ft_bzero(&data, sizeof(t_data));
-	if (lem_parsing(&data) == -1)
-		return (-1);
+	lem_parsing(&data);
 	lem_display(&data, data.list_data, data.list_rooms, data.list_links, 0b11);
 	lem_get_paths(data.list_paths, data.list_rooms, data.list_links);
 	return (0);

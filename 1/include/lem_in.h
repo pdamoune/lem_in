@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:42:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/10 00:17:17 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/10 00:26:34 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ struct		s_error
 	int		gnl;
 	int		ants;
 	int		rooms;
+	int		links;
 };
 
 void	lem_error(t_error *error);

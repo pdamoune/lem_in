@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 11:00:18 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/10 00:17:18 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/10 00:27:06 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int		lem_parsing(t_data *data)
 		lem_error(&error);
 	if ((error.rooms = lem_get_rooms(data, data->list_data, &data->list_rooms)) < 3)
 		lem_error(&error);
-	lem_get_links(data, data->list_data, data->list_rooms, &data->list_links);
+	if (!(error.links = lem_get_links(data, data->list_data, data->list_rooms, &data->list_links)))
+		lem_error(&error);
 	lem_get_graph(data, data->list_rooms, data->list_links);
 	ft_printf("=========================\n");
 	return (1);
