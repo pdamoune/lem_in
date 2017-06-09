@@ -6,14 +6,22 @@
 #    By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/26 22:40:04 by pdamoune          #+#    #+#              #
-#    Updated: 2017/05/30 14:46:54 by pdamoune         ###   ########.fr        #
+#    Updated: 2017/06/10 00:17:52 by pdamoune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	../lem_in
 SOURCES	=	src/main.c \
 			$(PATHLIB)/libft.a \
+			src/lem_error.c \
 			src/lem_parsing.c \
+			src/parsing/lem_is_com.c \
+			src/parsing/lem_is_room.c \
+			src/parsing/lem_is_link.c \
+			src/parsing/lem_get_data.c \
+			src/parsing/lem_get_ants.c \
+			src/parsing/lem_get_rooms.c \
+			src/parsing/lem_get_links.c \
 			src/lem_display.c
 CFLAGS	=	-Wall -Wextra -Werror
 DEBUG	=	-g3

@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:41:26 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/09 18:44:05 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/09 19:48:40 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int		main(void)
 {
 	t_data	data;
 
+	ft_bzero(&data, sizeof(t_data));
 	if (lem_parsing(&data) == -1)
 		return (-1);
 	lem_display(&data, data.list_data, data.list_rooms, data.list_links, 0b11);
