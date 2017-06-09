@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:42:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/05/30 15:41:59 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/09 17:44:51 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ struct		s_data
 struct		s_room
 {
 	char	*name;
+	int		pos;
+	int		busy;
 	long	x;
 	long	y;
-	int		pos;
 };
 
 struct		s_link
@@ -53,7 +54,7 @@ struct		s_link
 
 struct		s_path
 {
-	char	*paths;
+	char	*name;
 };
 
 

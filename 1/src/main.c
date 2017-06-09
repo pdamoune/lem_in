@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:41:26 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/05/30 16:57:17 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/09 18:44:05 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,92 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-t_list	*lem_get_starts(t_list *rooms)
+t_room	*lem_get_starts(t_list *rooms)
 {
-	t_list	*starts;
-	t_list	*tmp;
-	char	*name;
+	t_room	*tmp;
 
-	starts = NULL;
+	tmp = NULL;
 	while (rooms)
 	{
 		if (((t_room *)rooms->content)->pos == START)
 		{
-			name = ((t_room *)rooms->content)->name;
-
-			tmp = ft_lstnew(name, ft_strlen(name) + 1);
-			!starts ? starts = tmp : ft_lstadd_last(starts, tmp);
+			tmp = rooms->content;
+			return (tmp);
 		}
 		rooms = rooms->next;
 	}
-	return (starts);
+	return (tmp);
 }
 
-int		lem_get_shorter_path(t_list *rooms, t_list *links, char *start)
+static int	cmp(t_room *room, char *data)
+{
+	return (ft_strcmp(room->name, data));
+	return (1);
+}
+
+t_room	*lem_get_first_path(t_list *rooms, t_list *links, char *start)
 {
 	t_list	*tmp;
+	t_list	*path;
+	t_room	*room;
 	char	*room1;
 	char	*room2;
 
 	tmp = links;
+	path = NULL;
 	while (tmp)
 	{
 		room1 = ((t_link *)tmp->content)->room1;
 		room2 = ((t_link *)tmp->content)->room2;
-
 		if (!ft_strcmp(start, room1))
-			ft_putendl(room2);
-		// if (!ft_strcmp(room2, start))
-		// 	ft_putendl(room2);
+		{
+			room = ft_lstfind(rooms, room2, &cmp)->content;
+			if (!room->busy)
+				return (room);
+			// ft_printf("lst->room = %s\n\n", ((t_room *)path->content)->name);
+		}
+		if (!ft_strcmp(start, room2))
+		{
+			room = ft_lstfind(rooms, room1, &cmp)->content;
+			if (!room->busy)
+				return (room);
+		}
 		tmp = tmp->next;
 	}
 	(void)&rooms;
 	(void)&links;
-	return (1);
+	return (NULL);
 }
 
 int		lem_get_paths(t_list *paths, t_list *rooms, t_list *links)
 {
-	t_list	*starts;
+	t_list	*lst_tmp;
+	t_room	*tmp;
+	char	*name;
 
-	starts = lem_get_starts(rooms);
-	lem_get_shorter_path(rooms, links, starts->content);
-	while (starts)
+	tmp = lem_get_starts(rooms);
+	tmp->busy = 1;
+	lst_tmp = ft_lstnew(tmp, sizeof(t_room *));
+	paths = lst_tmp;
+	// lem_get_shorter_path(rooms, links, ((t_room *)starts->content)->name);
+	while (paths)
 	{
-		ft_printf("starts = %s\n", starts->content);
-		starts = starts->next;
+		name = ((t_room *)paths->content)->name;
+		if (!(tmp = lem_get_first_path(rooms, links, name)))
+		{
+			exit (0);
+		}
+		if (!tmp->busy)
+		{
+			ft_printf("name = %s\n", tmp->name);
+			if (tmp->pos == END)
+				ft_printf("END\n");
+			tmp->busy = 1;
+			lst_tmp = ft_lstnew(tmp, sizeof(t_room *));
+			paths->next = lst_tmp;
+		}
+		paths = paths->next;
 	}
-
-
-	(void)&links;
-	(void)&paths;
-	// rooms = ft_lstlen(rooms);
 	return (0);
 }
 
@@ -83,7 +109,7 @@ int		main(void)
 
 	if (lem_parsing(&data) == -1)
 		return (-1);
-	lem_get_paths(data.list_paths, data.list_rooms, data.list_links);
 	lem_display(&data, data.list_data, data.list_rooms, data.list_links, 0b11);
+	lem_get_paths(data.list_paths, data.list_rooms, data.list_links);
 	return (0);
 }

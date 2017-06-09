@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 11:00:18 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/05/30 14:48:20 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/09 17:15:51 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,22 +225,13 @@ int		lem_parsing(t_data *data)
 	ft_bzero(data, sizeof(t_data));
 	data->map[0] = 0;
 	data->map[1] = 0;
+	ft_printf("\n======== PARSING ========\n");
 	ft_printf("retour get_lines = %d\n", lem_get_lines(&data->list_data));
 	ft_printf("retour get_ants  = %d | ", lem_get_ants(data->list_data, &data->ants));
 	ft_printf("ants  = %d\n", data->ants);
-	ft_printf("retour get_rooms = %d\n", lem_get_rooms(data, data->list_data, &data->list_rooms));
+	ft_printf("retour get_rooms = %.2b\n", lem_get_rooms(data, data->list_data, &data->list_rooms));
 	ft_printf("retour get_links = %d\n", lem_get_links(data, data->list_data, data->list_rooms, &data->list_links));
 	lem_get_graph(data, data->list_rooms, data->list_links);
-	// while (l_rooms)
-	// {
-	// 	room = l_rooms->content;
-	// 	ft_printf("name = |%s|\n", room->name);
-	// 	ft_printf("pos  = |%d|\n", room->pos);
-	// 	ft_printf("-------------\n");
-	// 	l_rooms = l_rooms->next;
-	// }
-
-	// (void)&l_links;
-	// (void)&l_rooms;
+	ft_printf("=========================\n");
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 14:44:22 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/05/30 15:26:00 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/09 17:19:16 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void 	lem_display(t_data *all_data, t_list *datas, t_list *rooms, t_list *links,
 	t_link	*link;
 	t_data	*data;
 
+	ft_printf("\n===========================================\n\n");
+	ft_printf("\n================= DISPLAY =================\n\n");
 	if (i & (1 << 2))
 	{
 		ft_printf("\n      ---- datas ----\n\n");
@@ -63,4 +65,6 @@ void 	lem_display(t_data *all_data, t_list *datas, t_list *rooms, t_list *links,
 		while (all_data->graph[++j])
 			ft_printf("|%s|\n", all_data->graph[j]);
 	}
+	ft_printf("\n===========================================\n\n");
+
 }
