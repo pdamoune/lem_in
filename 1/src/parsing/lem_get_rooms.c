@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 21:44:14 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/09 23:56:55 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/12 18:43:05 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ int		lem_set_room(t_list **list_rooms, t_room *room, int ret)
 	t_list	*tmp;
 
 	tmp = ft_lstptr(room);
-	!*list_rooms ? *list_rooms = tmp : ft_lstadd_last(*list_rooms, tmp);
+	!*list_rooms ? *list_rooms = tmp : ft_lstadd_last(list_rooms, tmp);
 	if (room->pos)
 	{
 		if (room->pos - 1 & ret)
 		{
 			ft_putendl("===");
-			ft_lstclr_last(*list_rooms);
+			ft_lstclr_last(list_rooms);
 			return (-1);
 		}
 		if (room->pos - 1 & ret)
 		{
 			ft_putendl("====");
-			ft_lstclr_last(*list_rooms);
+			ft_lstclr_last(list_rooms);
 			return (-1);
 		}
 		return (room->pos - 1);

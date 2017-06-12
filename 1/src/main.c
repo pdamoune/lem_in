@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:41:26 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/10 01:02:48 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/12 19:48:45 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,32 +64,25 @@ t_room	*lem_get_first_path(t_list *rooms, t_list *links, char *start)
 			if (!room->busy)
 				return (room);
 		}
-		if (!tmp->next)
-		{
-
-		}
 		tmp = tmp->next;
 	}
-
 	return (NULL);
 }
 
-int		lem_get_paths(t_list *paths, t_list *rooms, t_list *links)
+int		test(t_list **paths, t_list *rooms, t_list *links)
 {
 	t_list	*lst_tmp;
 	t_room	*tmp;
 	char	*name;
 
-	tmp = lem_get_start(rooms);
-	tmp->busy = 1;
-	lst_tmp = ft_lstptr(tmp);
-	paths = lst_tmp;
-	while (paths)
+	lst_tmp = *paths;
+	while (lst_tmp)
 	{
-		name = ((t_room *)paths->content)->name;
+		name = ((t_room *)lst_tmp->content)->name;
 		if (!(tmp = lem_get_first_path(rooms, links, name)))
 		{
-			exit (0);
+			ft_printf("NO END\n");
+			return (0);
 		}
 		if (!tmp->busy)
 		{
@@ -99,14 +92,133 @@ int		lem_get_paths(t_list *paths, t_list *rooms, t_list *links)
 				ft_printf("END\n");
 			}
 			tmp->busy = 1;
-			lst_tmp = ft_lstptr(tmp);
-			paths->next = lst_tmp;
-		}
-		paths = paths->next;
-	}
 
+			lst_tmp->next = ft_lstptr(tmp);
+		}
+		lst_tmp = lst_tmp->next;
+	}
 	return (0);
 }
+
+int		lem_try_rooms(t_list **paths, t_list *rooms, t_list *links)
+{
+	(void)&paths;
+	(void)&rooms;
+	(void)&links;
+	return (1);
+}
+
+char	*lem_rooms_cmp(t_link *link, char *name)
+{
+	if (!ft_memcmp(name, link->room1, ft_strlen(name) + 1))
+	{
+		return (link->room2);
+	}
+	if (!ft_memcmp(name, link->room2, ft_strlen(name) + 1))
+	{
+		return (link->room1);
+	}
+	(void)&link;
+	(void)&name;
+	return (NULL);
+}
+
+void 	dresult(t_list *list)
+{
+	while (list)
+	{
+		ft_printf("%s - ", list->content);
+		list = list->next;
+	}
+	ft_printf("\n");
+}
+
+t_list		*lem_try_path(t_list **paths, t_list *rooms, t_list *links)
+{
+	static t_list	*all_paths = NULL;
+	t_room	*tmp_room;
+	t_list	*tmp_link;
+	char	*name;
+	char	*next_room;
+	// static int i = 0;
+
+	name = (ft_lstlast(*paths))->content;
+	tmp_link = links;
+	// ft_printf("%d = debut\n", i++);
+	while (tmp_link)
+	{
+		// ft_printf("%d 	= while\n", i++);
+		// ft_putendl(name);
+		if ((next_room = lem_rooms_cmp(tmp_link->content, name)))
+		{
+			// ft_printf("%d 		= premier if\n", i++);
+
+			tmp_room = ft_lstfind(rooms, next_room, &cmp)->content;
+			if (!tmp_room->busy)
+			{
+				// ft_printf("%d 			= deuxieme if\n", i++);
+
+				tmp_room->busy = 1;
+				ft_lstadd_last(paths, ft_lstptr(next_room));
+				if (tmp_room->pos == 3)
+				{
+					// ft_printf("%d 				= troisieme if\n", i++);
+					return (*paths);
+				}
+				if (lem_try_path(paths, rooms, links))
+				{
+					// ft_printf("%d 				= quatrieme if\n", i++);
+					if (!all_paths)
+					{
+						all_paths = ft_lstptr(*paths);
+
+					}
+					else
+						ft_lstadd_last(&all_paths, ft_lstptr(*paths));
+				}
+				dresult(*paths);
+				
+				tmp_room->busy = 0;
+				ft_lstclr_last(paths);
+			}
+			// ft_printf("%d 			= fin deuxieme if\n", i++);
+			if ((tmp_link = tmp_link->next))
+				continue ;
+		}
+		// ft_printf("%d 		= fin premier if\n", i++);
+
+		if (tmp_link && (tmp_link = tmp_link->next))
+			continue ;
+
+	}
+	// ft_printf("%d 			= fin while\n", i++);
+
+
+
+	(void)&paths;
+	(void)&rooms;
+	(void)&links;
+	return (all_paths);
+
+}
+
+int		lem_get_paths(t_list **paths, t_list *rooms, t_list *links)
+{
+	t_list	*all_paths;
+	t_list	*lst_tmp;
+	t_room	*tmp;
+
+	tmp = lem_get_start(rooms);
+	tmp->busy = 1;
+	lst_tmp = ft_lstptr(tmp->name);
+	*paths = lst_tmp;
+	all_paths = lem_try_path(paths, rooms, links);
+
+	return (1);
+	return (test(paths, rooms, links));
+}
+
+
 
 int		main(void)
 {
@@ -115,6 +227,11 @@ int		main(void)
 	ft_bzero(&data, sizeof(t_data));
 	lem_parsing(&data);
 	lem_display(&data, data.list_data, data.list_rooms, data.list_links, 0b11);
-	lem_get_paths(data.list_paths, data.list_rooms, data.list_links);
+	lem_get_paths(&data.list_paths, data.list_rooms, data.list_links);
+	// while (data.list_paths->content)
+	// {
+	// 	ft_printf("%s - ", data.list_paths->content);
+	// 	data.list_paths = data.list_paths->next;
+	// }
 	return (0);
 }
