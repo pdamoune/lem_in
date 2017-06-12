@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:42:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/10 00:26:34 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/12 19:51:22 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ typedef struct s_error	t_error;
 
 struct		s_data
 {
-	int		ants;
-	int		map[2];
-	char	**graph;
+	int			ants;
+	int			map[2];
+	char		**graph;
 	t_list	*list_paths;
 	t_list	*list_data;
 	t_list	*list_rooms;
