@@ -6,13 +6,28 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:41:26 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/12 19:48:45 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/16 18:15:36 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lem_in.h"
 #include <fcntl.h>
 #include <stdio.h>
+
+static void display(void *content)
+{
+	static int		i = 0;
+
+	if (!ft_strcmp((char *)content, "start"))
+		i = 0;
+	ft_printf("%-2d = %s\n", i++, content);
+}
+
+static int	cmp(t_room *room, char *data)
+{
+	return (ft_strcmp(room->name, data));
+	return (1);
+}
 
 t_room	*lem_get_start(t_list *rooms)
 {
@@ -31,42 +46,13 @@ t_room	*lem_get_start(t_list *rooms)
 	return (tmp);
 }
 
-static int	cmp(t_room *room, char *data)
-{
-	return (ft_strcmp(room->name, data));
-	return (1);
-}
+
 
 t_room	*lem_get_first_path(t_list *rooms, t_list *links, char *start)
 {
-	t_list	*tmp;
-	t_list	*path;
-	t_room	*room;
-	char	*room1;
-	char	*room2;
-
-	tmp = links;
-	path = NULL;
-	while (tmp)
-	{
-		room1 = ((t_link *)tmp->content)->room1;
-		room2 = ((t_link *)tmp->content)->room2;
-		if (!ft_strcmp(start, room1))
-		{
-			room = ft_lstfind(rooms, room2, &cmp)->content;
-			if (!room->busy)
-				return (room);
-			// ft_printf("lst->room = %s\n\n", ((t_room *)path->content)->name);
-		}
-		if (!ft_strcmp(start, room2))
-		{
-			room = ft_lstfind(rooms, room1, &cmp)->content;
-			if (!room->busy)
-				return (room);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
+	(void)&links;
+	(void)&start;
+	return (rooms->content);
 }
 
 int		test(t_list **paths, t_list *rooms, t_list *links)
@@ -123,88 +109,49 @@ char	*lem_rooms_cmp(t_link *link, char *name)
 	return (NULL);
 }
 
-void 	dresult(t_list *list)
+int		lem_try_path(t_list *paths, t_list *rooms, t_list *links)
 {
-	while (list)
-	{
-		ft_printf("%s - ", list->content);
-		list = list->next;
-	}
-	ft_printf("\n");
-}
+	static t_list	*path = NULL;
+	t_room			*tmp_room;
+	char			*name;
+	char			*next_room;
 
-t_list		*lem_try_path(t_list **paths, t_list *rooms, t_list *links)
-{
-	static t_list	*all_paths = NULL;
-	t_room	*tmp_room;
-	t_list	*tmp_link;
-	char	*name;
-	char	*next_room;
-	// static int i = 0;
-
-	name = (ft_lstlast(*paths))->content;
-	tmp_link = links;
-	// ft_printf("%d = debut\n", i++);
-	while (tmp_link)
+	name = ft_lstlast(paths)->content;
+	while (links)
 	{
-		// ft_printf("%d 	= while\n", i++);
-		// ft_putendl(name);
-		if ((next_room = lem_rooms_cmp(tmp_link->content, name)))
+		if ((next_room = lem_rooms_cmp(links->content, name)))
 		{
-			// ft_printf("%d 		= premier if\n", i++);
-
 			tmp_room = ft_lstfind(rooms, next_room, &cmp)->content;
 			if (!tmp_room->busy)
 			{
-				// ft_printf("%d 			= deuxieme if\n", i++);
-
 				tmp_room->busy = 1;
-				ft_lstadd_last(paths, ft_lstptr(next_room));
-				if (tmp_room->pos == 3)
+				ft_lstadd_last(&paths, ft_lstptr(next_room));
+				if (tmp_room->pos == END)
+					return (1);
+				if ((lem_try_path(paths, rooms, links)))
 				{
-					// ft_printf("%d 				= troisieme if\n", i++);
-					return (*paths);
 				}
-				if (lem_try_path(paths, rooms, links))
-				{
-					// ft_printf("%d 				= quatrieme if\n", i++);
-					if (!all_paths)
-					{
-						all_paths = ft_lstptr(*paths);
-
-					}
-					else
-						ft_lstadd_last(&all_paths, ft_lstptr(*paths));
-				}
-				dresult(*paths);
-				
 				tmp_room->busy = 0;
-				ft_lstclr_last(paths);
+				ft_lstclr_last(&paths);
 			}
-			// ft_printf("%d 			= fin deuxieme if\n", i++);
-			if ((tmp_link = tmp_link->next))
-				continue ;
 		}
-		// ft_printf("%d 		= fin premier if\n", i++);
-
-		if (tmp_link && (tmp_link = tmp_link->next))
+		if ((links = links->next))
 			continue ;
-
+		ft_lstforeach(path, &display);
 	}
-	// ft_printf("%d 			= fin while\n", i++);
+	// if (path)
+	// 	ft_lstforeach(path->content, &display);
 
-
-
-	(void)&paths;
-	(void)&rooms;
+	(void)&display;
 	(void)&links;
-	return (all_paths);
-
+	return (0);
 }
+
+
 
 int		lem_get_paths(t_list **paths, t_list *rooms, t_list *links)
 {
-	t_list	*all_paths;
+	// t_list	*all_paths;
 	t_list	*lst_tmp;
 	t_room	*tmp;
 
@@ -212,8 +159,8 @@ int		lem_get_paths(t_list **paths, t_list *rooms, t_list *links)
 	tmp->busy = 1;
 	lst_tmp = ft_lstptr(tmp->name);
 	*paths = lst_tmp;
-	all_paths = lem_try_path(paths, rooms, links);
-
+	// ft_lstforeach(lst_tmp, &display);
+	lem_try_path(*paths, rooms, links);
 	return (1);
 	return (test(paths, rooms, links));
 }
