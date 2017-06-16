@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:41:26 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/16 20:06:34 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/16 20:16:29 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,19 +142,17 @@ int		lem_try_path(t_list **all_paths, t_list *path, t_list *rooms, t_list *links
 		if ((next_room = lem_rooms_cmp(link_tmp->content, name)))
 		{
 			tmp_room = ft_lstfind(rooms, next_room, &cmp)->content;
-			ft_lstforeach(path, &display);
-			ft_printf("=======\n");
-			if (!all_paths || ft_lstlen(path) < ft_lstlen(*all_paths))
-				if (!tmp_room->busy)
+			// ft_putnbrel(ft_lstlen(path));
+			if (!tmp_room->busy)
 			{
 				tmp_room->busy = 1;
 				ft_lstadd_last(&path, ft_lstptr(next_room));
 				if (tmp_room->pos == END)
 				{
-					// if (!*all_paths)
+					if (!*all_paths)
 						*all_paths = ft_lstptr(ft_lstcpy(path));
-					// else
-						// ft_lstadd(all_paths, ft_lstptr(ft_lstcpy(path)));
+					else
+						ft_lstadd(all_paths, ft_lstptr(ft_lstcpy(path)));
 				}
 				lem_try_path(all_paths, path, rooms, links);
 				tmp_room->busy = 0;
