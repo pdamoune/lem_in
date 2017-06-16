@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:41:26 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/16 19:36:42 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/16 20:06:34 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void display(void *content)
 {
 	static int		i = 0;
 
-	if (!ft_strcmp(content, "start"))
+	if (!ft_strcmp(content, "1"))
 		i = 0;
-	ft_printf("%-2d = %s\n", i++, content);
+	ft_printf("%s - ", content);
 }
 
 static int	cmp(t_room *room, char *data)
@@ -126,35 +126,42 @@ char	*lem_rooms_cmp(t_link *link, char *name)
 int		lem_try_path(t_list **all_paths, t_list *path, t_list *rooms, t_list *links)
 {
 	t_room			*tmp_room;
+	t_list			*link_tmp;
+	t_list			*room_tmp;
 	char			*name;
 	char			*next_room;
 
+	link_tmp = links;
+	room_tmp = rooms;
 	name = ft_lstlast(path)->content;
-	while (links)
+	// ft_printf("%s - %s\n", ((t_link *)link_tmp->content)->room1, ((t_link *)link_tmp->content)->room2);
+	while (link_tmp)
 	{
-		if ((next_room = lem_rooms_cmp(links->content, name)))
+		// ft_printf("%s - %s\n", ((t_link *)link_tmp->content)->room1, ((t_link *)link_tmp->content)->room2);
+
+		if ((next_room = lem_rooms_cmp(link_tmp->content, name)))
 		{
+			tmp_room = ft_lstfind(rooms, next_room, &cmp)->content;
 			ft_lstforeach(path, &display);
 			ft_printf("=======\n");
-
-			tmp_room = ft_lstfind(rooms, next_room, &cmp)->content;
-			if (!tmp_room->busy)
+			if (!all_paths || ft_lstlen(path) < ft_lstlen(*all_paths))
+				if (!tmp_room->busy)
 			{
 				tmp_room->busy = 1;
 				ft_lstadd_last(&path, ft_lstptr(next_room));
 				if (tmp_room->pos == END)
 				{
-					if (!*all_paths)
+					// if (!*all_paths)
 						*all_paths = ft_lstptr(ft_lstcpy(path));
-					else
-						ft_lstadd(all_paths, ft_lstptr(ft_lstcpy(path)));
+					// else
+						// ft_lstadd(all_paths, ft_lstptr(ft_lstcpy(path)));
 				}
 				lem_try_path(all_paths, path, rooms, links);
 				tmp_room->busy = 0;
 				ft_lstclr_last(&path);
 			}
 		}
-		if ((links = links->next))
+		if ((link_tmp = link_tmp->next))
 			continue ;
 	}
 	// if (path)
