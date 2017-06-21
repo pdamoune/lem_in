@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/30 14:44:22 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/12 15:30:55 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/19 20:19:07 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void 	lem_display(t_data *all_data, t_list *datas, t_list *rooms, t_list *links,
 		while (rooms)
 		{
 			room = rooms->content;
-			room->pos == 0 ? ft_printf("pos  = |%d|       x = %2d  /  y = %2d  /  name = |%s|\n", room->pos, room->x, room->y, room->name) : 0;
-			room->pos == 2 ? ft_printf("pos  = |START|   x = %2d  /  y = %2d  /  name = |%s|\n", room->x, room->y, room->name) : 0;
-			room->pos == 3 ? ft_printf("pos  = |END|     x = %2d  /  y = %2d  /  name = |%s|\n", room->x, room->y, room->name) : 0;
+			room->pos == 0 ? ft_printf("nb = |%d| pos  = |%d|       x = %2d  /  y = %2d  /  name = |%s|\n", room->rm_nb, room->pos, room->x, room->y, room->name) : 0;
+			room->pos == 2 ? ft_printf("nb = |%d| pos  = |START|   x = %2d  /  y = %2d  /  name = |%s|\n", room->rm_nb, room->x, room->y, room->name) : 0;
+			room->pos == 3 ? ft_printf("nb = |%d| pos  = |END|     x = %2d  /  y = %2d  /  name = |%s|\n", room->rm_nb, room->x, room->y, room->name) : 0;
 			rooms = rooms->next;
 		}
 	}

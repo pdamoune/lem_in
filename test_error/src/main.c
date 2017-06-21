@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_get_data.c                                     :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 19:50:31 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/21 16:39:38 by pdamoune         ###   ########.fr       */
+/*   Created: 2017/05/15 10:41:26 by pdamoune          #+#    #+#             */
+/*   Updated: 2017/06/19 19:40:56 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/lem_in.h"
+#include "../include/lem_in.h"
 
-int		lem_get_data(t_list **data)
+int		main(void)
 {
-	t_list	*tmp;
-	char	*line;
-	int		ret;
-	int		i;
-
-	i = -1;
-	while ((ret = get_next_line(0, &line)) > 0 && ft_strlen(line))
-	{
-		tmp = ft_lstptr(line);
-		!*data ? *data = tmp : ft_lstadd_last(data, tmp);
-		i++;
-	}
-	return (i + ret + 1);
+	lem_parser();
+	lem_display(2, "ants", "data");
+	return (0);
 }

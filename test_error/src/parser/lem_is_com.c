@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_get_data.c                                     :+:      :+:    :+:   */
+/*   lem_is_com.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 19:50:31 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/21 16:39:38 by pdamoune         ###   ########.fr       */
+/*   Created: 2017/06/19 19:35:14 by pdamoune          #+#    #+#             */
+/*   Updated: 2017/06/19 19:37:48 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lem_in.h"
 
-int		lem_get_data(t_list **data)
+int		lem_is_com(char *line)
 {
-	t_list	*tmp;
-	char	*line;
-	int		ret;
-	int		i;
-
-	i = -1;
-	while ((ret = get_next_line(0, &line)) > 0 && ft_strlen(line))
-	{
-		tmp = ft_lstptr(line);
-		!*data ? *data = tmp : ft_lstadd_last(data, tmp);
-		i++;
-	}
-	return (i + ret + 1);
+	if (!line)
+		return (-1);
+	if (!ft_strncmp(line, "##end", 6))
+		return (END);
+	if (!ft_strncmp(line, "##start", 8))
+		return (START);
+	if (line[0] == '#')
+		return (COM);
+	return (NOT_COM);
 }

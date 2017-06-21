@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_get_data.c                                     :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 19:50:31 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/21 16:39:38 by pdamoune         ###   ########.fr       */
+/*   Created: 2017/06/19 17:39:27 by pdamoune          #+#    #+#             */
+/*   Updated: 2017/06/19 19:32:20 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/lem_in.h"
+#include "../include/lem_in.h"
 
-int		lem_get_data(t_list **data)
+void	lem_parser(void)
 {
-	t_list	*tmp;
-	char	*line;
-	int		ret;
-	int		i;
+	t_data		*data;
 
-	i = -1;
-	while ((ret = get_next_line(0, &line)) > 0 && ft_strlen(line))
-	{
-		tmp = ft_lstptr(line);
-		!*data ? *data = tmp : ft_lstadd_last(data, tmp);
-		i++;
-	}
-	return (i + ret + 1);
+	data = v_data();
+	ft_printf("\n======== PARSING ========\n");
+	lem_get_data();
+	lem_get_ants(data->list_data);
+	// lem_get_rooms(void);
+	// lem_get_links(void);
+	ft_printf("=========================\n");
+
 }

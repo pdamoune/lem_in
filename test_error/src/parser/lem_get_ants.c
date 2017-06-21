@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_get_data.c                                     :+:      :+:    :+:   */
+/*   lem_get_ants.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 19:50:31 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/21 16:39:38 by pdamoune         ###   ########.fr       */
+/*   Created: 2017/06/19 19:28:43 by pdamoune          #+#    #+#             */
+/*   Updated: 2017/06/19 19:37:26 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lem_in.h"
 
-int		lem_get_data(t_list **data)
+void	lem_get_ants(t_list *data)
 {
-	t_list	*tmp;
-	char	*line;
-	int		ret;
-	int		i;
-
-	i = -1;
-	while ((ret = get_next_line(0, &line)) > 0 && ft_strlen(line))
-	{
-		tmp = ft_lstptr(line);
-		!*data ? *data = tmp : ft_lstadd_last(data, tmp);
-		i++;
-	}
-	return (i + ret + 1);
+	while (data && lem_is_com(data->content))
+		data = data->next;
+	if (!ft_isint(data->content))
+		lem_error(NO_INT);
+	if (!(v_data()->ants = ft_atoi(data->content)))
+		lem_error(NO_ANTS);
+	if (v_data()->ants < 0)
+		lem_error(NEG_NB);
 }

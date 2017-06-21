@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_get_data.c                                     :+:      :+:    :+:   */
+/*   lem_error.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/09 19:50:31 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/21 16:39:38 by pdamoune         ###   ########.fr       */
+/*   Created: 2017/06/19 19:20:41 by pdamoune          #+#    #+#             */
+/*   Updated: 2017/06/19 19:33:53 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/lem_in.h"
+#ifndef LEM_ERROR_H
+# define LEM_ERROR_H
+# define GNL_ERROR 1
+# define EMPTY_FILE 2
+# define NO_ANTS 3
+# define NO_INT 4
+# define NEG_NB 5
 
-int		lem_get_data(t_list **data)
-{
-	t_list	*tmp;
-	char	*line;
-	int		ret;
-	int		i;
-
-	i = -1;
-	while ((ret = get_next_line(0, &line)) > 0 && ft_strlen(line))
-	{
-		tmp = ft_lstptr(line);
-		!*data ? *data = tmp : ft_lstadd_last(data, tmp);
-		i++;
-	}
-	return (i + ret + 1);
-}
+#endif

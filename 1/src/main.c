@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:41:26 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/16 20:16:29 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/06/19 14:58:02 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_room	*lem_get_start(t_list *rooms)
 	tmp = NULL;
 	while (rooms)
 	{
-		if (((t_room *)rooms->content)->pos == START)
+		if (((t_room *)rooms->content)->pos == END)
 		{
 			tmp = rooms->content;
 			return (tmp);
@@ -130,10 +130,12 @@ int		lem_try_path(t_list **all_paths, t_list *path, t_list *rooms, t_list *links
 	t_list			*room_tmp;
 	char			*name;
 	char			*next_room;
+	static size_t	len = INT_MAX;
+	// int				len2;
 
 	link_tmp = links;
 	room_tmp = rooms;
-	name = ft_lstlast(path)->content;
+	name = ft_lstfirst(path)->content;
 	// ft_printf("%s - %s\n", ((t_link *)link_tmp->content)->room1, ((t_link *)link_tmp->content)->room2);
 	while (link_tmp)
 	{
@@ -142,28 +144,38 @@ int		lem_try_path(t_list **all_paths, t_list *path, t_list *rooms, t_list *links
 		if ((next_room = lem_rooms_cmp(link_tmp->content, name)))
 		{
 			tmp_room = ft_lstfind(rooms, next_room, &cmp)->content;
-			// ft_putnbrel(ft_lstlen(path));
-			if (!tmp_room->busy)
-			{
-				tmp_room->busy = 1;
-				ft_lstadd_last(&path, ft_lstptr(next_room));
-				if (tmp_room->pos == END)
+
+			if (ft_lstlen(path) < len)
+				if (!tmp_room->busy)
 				{
-					if (!*all_paths)
-						*all_paths = ft_lstptr(ft_lstcpy(path));
-					else
-						ft_lstadd(all_paths, ft_lstptr(ft_lstcpy(path)));
+					tmp_room->busy = 1;
+					ft_lstadd(&path, ft_lstptr(next_room));
+					if (tmp_room->pos == START)
+					{
+						ft_lstforeach(path, &display);
+						ft_putendl("");
+						len = ft_lstlen(path);
+						if (!*all_paths)
+							*all_paths = ft_lstptr(ft_lstcpy(path));
+						else
+							ft_lstadd(all_paths, ft_lstptr(ft_lstcpy(path)));
+					}
+					lem_try_path(all_paths, path, rooms, links);
+
+
+					tmp_room->busy = 0;
+					ft_lstclr_first(&path);
+					// ft_putendl(path->content);
+					// ft_putendl("");
+					// ft_putstr("{");
+					// ft_lstforeach(path, &display);
+					// ft_putendl("}");
 				}
-				lem_try_path(all_paths, path, rooms, links);
-				tmp_room->busy = 0;
-				ft_lstclr_last(&path);
-			}
 		}
 		if ((link_tmp = link_tmp->next))
 			continue ;
 	}
 	// if (path)
-	// 	ft_lstforeach(path->content, &display);
 
 	(void)&display;
 	(void)&links;
@@ -194,12 +206,12 @@ int		lem_get_paths(t_list **paths, t_list *rooms, t_list *links)
 
 int		main(void)
 {
-	t_data	data;
+	t_data	*data;
 
-	ft_bzero(&data, sizeof(t_data));
-	lem_parsing(&data);
-	lem_display(&data, data.list_data, data.list_rooms, data.list_links, 0b11);
-	lem_get_paths(&data.list_paths, data.list_rooms, data.list_links);
+	data = lem_data();
+	lem_parsing(data);
+	lem_display(data, data->list_data, data->list_rooms, data->list_links, 0b11);
+	lem_get_paths(&data->list_paths, data->list_rooms, data->list_links);
 	// while (data.list_paths->content)
 	// {
 	// 	ft_printf("%s - ", data.list_paths->content);
