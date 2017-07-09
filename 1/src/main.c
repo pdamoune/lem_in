@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:41:26 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/19 14:58:02 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/09 18:07:29 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,15 +207,24 @@ int		lem_get_paths(t_list **paths, t_list *rooms, t_list *links)
 int		main(void)
 {
 	t_data	*data;
+	t_list	*rooms;
+	t_list	*links;
 
 	data = lem_data();
 	lem_parsing(data);
 	lem_display(data, data->list_data, data->list_rooms, data->list_links, 0b11);
 	lem_get_paths(&data->list_paths, data->list_rooms, data->list_links);
-	// while (data.list_paths->content)
-	// {
-	// 	ft_printf("%s - ", data.list_paths->content);
-	// 	data.list_paths = data.list_paths->next;
-	// }
+	rooms = data->list_rooms;
+	while (rooms)
+	{
+		ft_printf("room = %s\n", ((t_room *)rooms->content)->name);
+		links = ((t_room *)rooms->content)->links;
+		while (links)
+		{
+			ft_printf("   links = %s\n", links->content);
+			links = links->next;
+		}
+		rooms = rooms->next;
+	}
 	return (0);
 }

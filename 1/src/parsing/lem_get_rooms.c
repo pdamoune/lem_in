@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 21:44:14 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/19 20:18:09 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/09 18:44:13 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,17 @@ int		lem_get_rooms(t_data *data, t_list *list_data, t_list **list_rooms)
 	char	*line;
 	t_link	link;
 	int		ret;
+	int		i;
 
 	ret = 0;
+	i = -1;
 	room = ft_memalloc(sizeof(t_room));
 	while ((list_data = list_data->next))
 	{
 		if (lem_set_com(list_data->content, &room->pos))
+			continue ;
+		i++;
+		if (!i)
 			continue ;
 		if (lem_is_room(data, room, (line = ft_strdup(list_data->content))))
 		{

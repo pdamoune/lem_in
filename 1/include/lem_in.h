@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 10:42:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/06/19 20:15:22 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/09 17:53:53 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ struct		s_room
 	int		busy;
 	long	x;
 	long	y;
+	t_list	*links;
 };
 
 struct		s_link
