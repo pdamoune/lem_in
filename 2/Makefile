@@ -6,22 +6,22 @@
 #    By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/26 22:40:04 by pdamoune          #+#    #+#              #
-#    Updated: 2017/07/10 19:01:25 by pdamoune         ###   ########.fr        #
+#    Updated: 2017/07/10 19:02:21 by pdamoune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	../lem_in
 SOURCES	=	src/main.c \
 			$(PATHLIB)/libft.a \
-			src/lem_data.c \
-			src/lem_error.c \
-			src/lem_parsing.c \
-			src/parsing/lem_is_com.c \
-			src/parsing/lem_is_room.c \
-			src/parsing/lem_get_data.c \
-			src/parsing/lem_get_ants.c \
-			src/parsing/lem_get_rooms.c \
-			src/lem_display.c
+			src/tools/lem_error.c \
+			src/tools/lem_display.c \
+			src/tools/lem_set_globales.c \
+			src/lem_parser.c \
+			src/parser/lem_get_data.c \
+			src/parser/lem_get_ants.c \
+			src/parser/lem_get_rooms.c \
+			src/parser/lem_is_com.c \
+			src/parser/lem_is_room.c
 CFLAGS	=	-Wall -Wextra -Werror
 DEBUG	=	-g3
 NOFLAGS =	-Wno-format
@@ -35,32 +35,17 @@ $(NAME): library
 		@$(CC) -o $(NAME) $(SOURCES) $(CFLAGS) $(DEBUG)
 
 run:	$(NAME)
-		./$(NAME) < exemple
+		./$(NAME) < ../data
 
 seg:	$(NAME)
 		./$(NAME) < segfault
 
 val:	$(NAME)
-		valgrind $(NAME) < exemple
-
-visu: visuel run
-
-visuel:
-	osascript -e 'tell application "iTerm" to activate' -e \
-	'tell application "System Events" to tell process "iTerm" \
-	to keystroke "n" using {command down}'
-	@# @osascript -e 'tell application "iTerm" to activate' -e \
-	@# 'tell application "System Events" to tell process "iTerm" \
-	@# to keystroke "d" using {command down}'
-	osascript -e 'tell application "iTerm" to activate' -e \
-	'tell application "System Events" to tell process "iTerm" \
-	to keystroke "n" using {command down}'
-	@#, shift down}'
+		valgrind ./$(NAME) < ../data
 
 lib:
 		@rm -rf libft
 		@ln -s ~/Documents/42/projets_42/library libft
-		# git submodule update --init 1/libft
 
 library: lib
 		@make -C $(PATHLIB)

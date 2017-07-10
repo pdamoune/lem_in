@@ -1,0 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lem_in.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/10 11:25:19 by pdamoune          #+#    #+#             */
+/*   Updated: 2017/07/10 19:02:07 by pdamoune         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef LEM_IN_H
+# define LEM_IN_H
+# include "../libft/include/libft.h"
+# include "lem_error.h"
+# define NOT_COM		0
+# define COM			1
+# define START			2
+# define END			3
+
+typedef struct s_room	t_room;
+
+struct	s_room
+{
+	char	*name;
+	int		room_number;
+	int		position;
+	int		busy;
+	int		coor[2];
+	int		*links;
+};
+
+t_list	*g_data;
+t_list	*g_rooms;
+int		g_ants;
+
+void	lem_set_globales(void);
+void 	lem_display(int args, ...);
+void	lem_free(int err);
+int		lem_parser(void);
+int		lem_get_data(void);
+int		lem_get_ants(t_list *data);
+int		lem_get_rooms(void);
+int		lem_is_com(char *line);
+int		lem_is_room(t_room *room, char *line);
+int		main(void);
+
+#endif

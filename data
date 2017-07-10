@@ -11,7 +11,7 @@ room4 7 6
 room5 2 2
 room6 8 3
 room7 0 8
-room8 4 3
+room8asdf 4 3
 ##end
 end 3 5
 room9 8 2
@@ -22,6 +22,6 @@ room3-room4
 room4-room5
 room5-room6
 room6-room7
-room8-room7
-room8-room9
+room8asdf-room7
+room8asdf-room9
 room9-end
