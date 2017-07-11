@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 11:25:19 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/10 19:02:07 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/11 19:08:35 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define END			3
 
 typedef struct s_room	t_room;
+typedef struct s_link	t_link;
 
 struct	s_room
 {
@@ -28,7 +29,7 @@ struct	s_room
 	int		position;
 	int		busy;
 	int		coor[2];
-	int		*links;
+	t_list	*links;
 };
 
 t_list	*g_data;
@@ -44,6 +45,7 @@ int		lem_get_ants(t_list *data);
 int		lem_get_rooms(void);
 int		lem_is_com(char *line);
 int		lem_is_room(t_room *room, char *line);
+int		lem_is_link(char *line);
 int		main(void);
 
 #endif

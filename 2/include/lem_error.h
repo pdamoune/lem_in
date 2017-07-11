@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 14:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/10 18:28:35 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/11 17:24:23 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define BAD_ANTS	2
 # define NO_ANTS	3
 # define NEG_ANTS	4
+
+# define ST_END	7
 # include <stdarg.h>
 
 #endif
