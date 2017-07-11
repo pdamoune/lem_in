@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 17:59:40 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/11 19:12:53 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/11 19:25:37 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,10 @@ static int	cmp(t_room *room, char *data)
 
 void 	lem_set_link(t_room *room1, t_room *room2)
 {
-	!room1->links ? room1->links = ft_lstptr(room2) : ft_lstadd_last(&room1->links, ft_lstptr(room2));
-	!room2->links ? room2->links = ft_lstptr(room1) : ft_lstadd_last(&room2->links, ft_lstptr(room1));
-	//
-	// ft_printf("%s | ", room1->name);
-	// ft_printf("%s\n", room2->name);
-	// ft_printf("%d     | ", room1->room_number);
-	// ft_printf("%d\n", room2->room_number);
+	!room1->links ? room1->links = ft_lstptr(room2) :
+	ft_lstadd_last(&room1->links, ft_lstptr(room2));
+	!room2->links ? room2->links = ft_lstptr(room1) :
+	ft_lstadd_last(&room2->links, ft_lstptr(room1));
 }
 
 int		lem_is_link(char *line)
@@ -52,7 +49,5 @@ int		lem_is_link(char *line)
 		break ;
 	}
 	line[i] = '-';
-	// ft_printf("line = %s\n", line);
-	// free(line);
 	return (1);
 }
