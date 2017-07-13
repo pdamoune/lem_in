@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/11 19:12:28 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/13 07:00:27 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,28 @@ void 	lem_disp_rooms(t_list *rooms)
 	ft_printf("=====================\n\n");
 }
 
+void 	lem_disp_paths(t_list *paths)
+{
+	t_list	*path;
+
+	ft_printf("%2cPATHS\n---------------------\n", 0);
+	if (!paths)
+		return ;
+	while (paths)
+	{
+		path = paths->content;
+		while (path)
+		{
+			ft_printf("%s - ", ((t_room *)path->content)->name);
+			path = path->next;
+		}
+		ft_printf("\n");
+		paths = paths->next;
+	}
+	ft_printf("\n");
+	ft_printf("=====================\n\n");
+}
+
 void 	lem_display(int args, ...)
 {
 	va_list		ap;
@@ -61,6 +83,8 @@ void 	lem_display(int args, ...)
 			ft_printf("%2cANTS = %d\n=====================\n", 0, g_ants);
 		if (!ft_strcmp("rooms", arg))
 			lem_disp_rooms(g_rooms);
+		if (!ft_strcmp("paths", arg))
+			lem_disp_paths(g_paths);
 		if (!ft_strcmp("data", arg))
 			lem_disp_data(g_data);
 	}

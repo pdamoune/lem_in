@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 11:25:19 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/11 19:08:35 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/13 04:02:26 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,18 @@ struct	s_room
 
 t_list	*g_data;
 t_list	*g_rooms;
+t_list	*g_paths;
 int		g_ants;
 
 void	lem_set_globales(void);
 void 	lem_display(int args, ...);
 void	lem_free(int err);
+int		main(void);
+
+/*
+** Parser.
+*/
+
 int		lem_parser(void);
 int		lem_get_data(void);
 int		lem_get_ants(t_list *data);
@@ -46,6 +53,12 @@ int		lem_get_rooms(void);
 int		lem_is_com(char *line);
 int		lem_is_room(t_room *room, char *line);
 int		lem_is_link(char *line);
-int		main(void);
+
+/*
+** Solver.
+*/
+
+int		lem_solver(void);
+t_room	*lem_get_start(t_list *rooms);
 
 #endif

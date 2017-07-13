@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_error.h                                        :+:      :+:    :+:   */
+/*   lem_get_start.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/10 14:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/13 06:41:38 by pdamoune         ###   ########.fr       */
+/*   Created: 2017/07/13 03:20:18 by pdamoune          #+#    #+#             */
+/*   Updated: 2017/07/13 03:28:20 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_ERROR_H
-# define LEM_ERROR_H
-# define BAD_FD		1
-# define BAD_ANTS	2
-# define NO_ANTS	3
-# define NEG_ANTS	4
+#include "../../include/lem_in.h"
 
-# define ST_END	7
-# include <stdarg.h>
-
-#endif
+t_room		*lem_get_start(t_list *rooms)
+{
+	while (rooms && ((t_room *)rooms->content)->position != START - 1)
+		rooms = rooms->next;
+	if (!rooms)
+		return (NULL); // no start
+	return (rooms->content);
+}

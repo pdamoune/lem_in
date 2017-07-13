@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/10 00:06:28 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/09 18:59:56 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/13 03:13:13 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ int		lem_is_link(t_list *l_rooms, t_link *link, char *line)
 			line[i] = '-';
 			continue ;
 		}
-
-		// ((t_room *)room2->content)->name)
-		// ((t_room *)room1->content)->links);
-		// ft_printf("----------\n");
-		// ft_printf("----------\n");
 		link->room1 = ft_strdup(line);
 		link->room2 = &line[i] + 1;
 		if (r1 && r2)
