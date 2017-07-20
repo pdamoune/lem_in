@@ -6,7 +6,7 @@
 #    By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/26 22:40:04 by pdamoune          #+#    #+#              #
-#    Updated: 2017/07/15 19:18:18 by philippedamoune  ###   ########.fr        #
+#    Updated: 2017/07/20 18:12:57 by pdamoune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SOURCES	=	src/main.c \
 			src/parser/lem_is_room.c \
 			src/parser/lem_is_link.c \
 			src/lem_solver.c \
-			src/solver/lem_get_start.c
+			src/solver/lem_get_start.c \
+			src/solver/lem_get_paths.c
 CFLAGS	=	-Wall -Wextra -Werror
 DEBUG	=	-g3
 NOFLAGS =	-Wno-format

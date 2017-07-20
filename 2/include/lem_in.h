@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 11:25:19 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/13 04:02:26 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/20 18:12:27 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ struct	s_room
 t_list	*g_data;
 t_list	*g_rooms;
 t_list	*g_paths;
+t_list	*g_multiple_paths;
 int		g_ants;
 
 void	lem_set_globales(void);
@@ -60,5 +61,6 @@ int		lem_is_link(char *line);
 
 int		lem_solver(void);
 t_room	*lem_get_start(t_list *rooms);
+int		lem_get_paths(void);
 
 #endif

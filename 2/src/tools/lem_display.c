@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/13 07:00:27 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/20 18:57:11 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,37 @@ void 	lem_disp_paths(t_list *paths)
 	ft_printf("=====================\n\n");
 }
 
+void 	lem_disp_mult_paths(t_list *m_paths)
+{
+	t_list	*list_paths;
+	t_list	*path;
+	int		i;
+
+	i = 1;
+	ft_printf("%2cPATHS\n---------------------\n", 0);
+	if (!m_paths)
+		return ;
+	while (m_paths)
+	{
+		list_paths = m_paths->content;
+		while (list_paths)
+		{
+			ft_printf("----   %d chemins   ----\n", i++);
+			path = list_paths->content;
+			while (path)
+			{
+				ft_printf("%s - ", ((t_room *)path->content)->name);
+				path = path->next;
+			}
+			list_paths = list_paths->next;
+		}
+		ft_printf("\n");
+		m_paths = m_paths->next;
+	}
+	ft_printf("\n");
+	ft_printf("=====================\n\n");
+}
+
 void 	lem_display(int args, ...)
 {
 	va_list		ap;
@@ -87,6 +118,8 @@ void 	lem_display(int args, ...)
 			lem_disp_paths(g_paths);
 		if (!ft_strcmp("data", arg))
 			lem_disp_data(g_data);
+		if (!ft_strcmp("multiple", arg))
+			lem_disp_mult_paths(g_multiple_paths);
 	}
 	ft_printf("=============== FIN DISPLAY =================\n\n");
 }
