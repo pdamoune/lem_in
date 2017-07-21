@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 03:17:22 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/20 23:02:26 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/21 19:45:42 by philippedamoune  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,41 +46,87 @@ void 	lem_clr_path(t_list *path)
 {
 	while (path)
 	{
-		((t_room *)(path->content))->busy = 0;
+		if (((t_room *)(path->content))->position != START - 1)
+			((t_room *)(path->content))->busy = 0;
 		path = path->next;
 	}
 }
 
-int 	lem_check_busy_room(t_list *path)
+int 	lem_is_busy(t_list *path)
 {
 	while (path)
 	{
-		if (!((t_room *)(path->content))->busy)
-			return (0);
+		if (((t_room *)(path->content))->busy)
+			return (1);
 		path = path->next;
+	}
+	return (0);
+}
+
+int		lem_check_path(t_list *paths, t_list *other_path)
+{
+	int		r1;
+	int		r2;
+	t_list	*tmp;
+
+	tmp = other_path;
+	while (paths)
+	{
+		r1 = ((t_room *)paths->content)->room_number;
+		ft_printf("paths = %d\n", r1);
+		while (tmp)
+		{
+			r2 = ((t_room *)tmp->content)->room_number;
+			if (r1 == r2)
+				return (0);
+			// ft_printf("r1 = %d\n", r1);
+			// ft_printf("r2 = %d\n", r2);
+			tmp = tmp->next;
+		}
+		tmp = other_path;
+		paths = paths->next;
 	}
 	return (1);
 }
 
+
 int		lem_get_shorter_path(t_list *paths, int nb)
 {
-	static int	i = 0;
-	t_list		*tmp;
+	int		i;
+	t_list	*tmp;
+	t_list	*tmp2;
 
-	tmp = paths;
-	lem_busy_path(paths->content);
-	while (paths && i < nb)
+
+(void)&nb;
+	i = 1;
+	tmp = NULL;
+	tmp2 = NULL;
+	while (paths)
 	{
-		if (++i == nb)
+		tmp = g_paths;
+		while (tmp)
 		{
-			ft_lstadd_last(&g_multiple_paths, paths->content);
-			lem_clr_path(paths->content);
-			break ;
+			if (!lem_is_busy(tmp->content))
+			{
+				if (nb >= i++)
+				{
+					lem_busy_path(tmp->content);
+					tmp2 = tmp->content;
+					while (tmp2)
+					{
+						ft_printf("%s - ", ((t_room *)tmp2->content)->name);
+						tmp2 = tmp2->next;
+					}
+					ft_printf("\n");
+
+					continue ;
+				}
+				else
+					return (0);
+			}
+			tmp = tmp->next;
 		}
-		if (lem_check_busy_room(tmp->content))
-		{
-			// exit (0);
-		}
+		lem_clr_path(g_rooms);
 		paths = paths->next;
 	}
 	return (0);
@@ -90,15 +136,14 @@ int		lem_multiple_paths(t_list *paths, int paths_max)
 {
 	int i = 0;
 
-	// ft_putnbrel(paths_max);
+	ft_printf("paths_max = %d\n", paths_max);
 	while (i++ < paths_max)
 	{
+		lem_clr_path(g_rooms);
+		ft_printf("paths numero  = %d\n", i);
 		lem_get_shorter_path(paths, i);
+		// lem_display(1, "multiple", g_multiple_paths);
 	}
-
-
-
-
 	(void)&paths;
 	(void)&paths_max;
 	return (0);
@@ -113,7 +158,7 @@ int		lem_solver(void)
 	// ft_printf("nbre paths = %d\n", lem_nb_paths_max(g_paths));
 	// ft_printf("nb paths max = %d\n", ft_lstlen(g_paths));
 	lem_multiple_paths(g_paths, lem_nb_paths_max(g_paths));
-
+	// lem_display(1, "list", g_rooms);
 	ft_printf("\n======== FIN SOLVER ========\n");
 	return (0);
 }
