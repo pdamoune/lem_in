@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 03:17:22 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/24 17:07:28 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/24 19:22:10 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void 	lem_busy_path(t_list *path)
 	}
 }
 
-void 	lem_clr_path(t_list *path)
+static void 	lem_clr_path(t_list *path)
 {
 	while (path)
 	{
@@ -158,6 +158,8 @@ void 	lem_set_weight(t_list *links, t_room *room)
 		room = links->content;
 		if (room->position < START - 1 && (room->weight > i || !room->busy))
 		{
+			// ft_printf("name = %s | ", room->name);
+			// ft_printf("i = %d\n", i);
 			room->busy = 1;
 			room->weight = i;
 			i++;
@@ -177,6 +179,8 @@ int		lem_solver(void)
 	end = lem_get_end(g_rooms);
 	end->busy = 1;
 	lem_set_weight(end->links, end);
+	// lem_display(1, "rooms");
+	end->weight = 0;
 	end->busy = 0;
 	// lem_display(1, "rooms");
 	lem_get_paths();
@@ -184,7 +188,7 @@ int		lem_solver(void)
 
 	// ft_printf("nbre paths = %d\n", lem_nb_paths_max(g_paths));
 	// ft_printf("nb paths max = %d\n", ft_lstlen(g_paths));
-	lem_multiple_paths(g_paths, lem_nb_paths_max(g_paths));
+	// lem_multiple_paths(g_paths, lem_nb_paths_max(g_paths));
 	// lem_display(1, "list", g_rooms);
 	ft_printf("\n======== FIN SOLVER ========\n");
 	return (0);
