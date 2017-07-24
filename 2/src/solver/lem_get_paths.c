@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 18:11:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/24 20:34:40 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/24 20:48:36 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,18 @@ int		lem_find_path(t_list *path, t_room *room)
 int		lem_test_paths(t_list *path, t_room *room, t_list *links, int n)
 {
 	static int	i = 1;
+	static int	ret = 0;
 	t_list		*links_tmp;
 	t_room		*room_tmp;
 
 	links_tmp = links;
 	room_tmp = room;
-	if (room->position == START - 1 && n == i - 1)
-		lem_display(1, "list", path);
+	if (room->position == END - 1 && i == n)
+	{
+		ft_lstadd_last(&g_paths, ft_lstptr(ft_lstdup(path)));
+		// lem_display(1, "list", path);
+		return (1);
+	}
 	if (i > n)
 		return (0);
 	while (links_tmp)
@@ -118,7 +123,8 @@ int		lem_test_paths(t_list *path, t_room *room, t_list *links, int n)
 			room_tmp->busy = 1;
 			i++;
 			ft_lstadd_last(&path, ft_lstptr(room_tmp));
-			lem_test_paths(path, room_tmp, room_tmp->links, n);
+			if (lem_test_paths(path, room_tmp, room_tmp->links, n))
+				return (ret = 1);
 			ft_lstclr_last(&path);
 			// ft_printf("%s - ", room_tmp->name);
 			// ft_printf("\n");
@@ -133,21 +139,23 @@ int		lem_test_paths(t_list *path, t_room *room, t_list *links, int n)
 	// lem_test_paths(path, room, links, n);
 	// if (lem_test_paths(path, room, room->links, n))
 	// 	return (1);
-	return (0);
+	return (ret);
 }
 
 int		lem_get_paths(void)
 {
 	t_room	*room;
 	t_list	*path;
+	int i = 0;
 
-	room = lem_get_end(g_rooms);
+	room = lem_get_start(g_rooms);
 	path = ft_lstptr(room);
-	g_paths = ft_lstptr(path);
+	// g_paths = ft_lstptr(path);
 	lem_clr_path(g_rooms);
 	room->busy = 1;
-	lem_display(1, "rooms");
-	lem_test_paths(path, room, room->links, 10);
+	while (!lem_test_paths(path, room, room->links, i))
+		i++;
+	lem_display(2, "rooms", "paths");
 	room->busy = 1;
 	// lem_find_path(path, room);
 
