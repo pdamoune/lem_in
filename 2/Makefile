@@ -6,7 +6,7 @@
 #    By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/26 22:40:04 by pdamoune          #+#    #+#              #
-#    Updated: 2017/07/20 18:12:57 by pdamoune         ###   ########.fr        #
+#    Updated: 2017/07/24 16:29:14 by pdamoune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SOURCES	=	src/main.c \
 			src/parser/lem_is_link.c \
 			src/lem_solver.c \
 			src/solver/lem_get_start.c \
+			src/solver/lem_get_end.c \
 			src/solver/lem_get_paths.c
 CFLAGS	=	-Wall -Wextra -Werror
 DEBUG	=	-g3

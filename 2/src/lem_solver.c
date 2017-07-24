@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 03:17:22 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/21 19:45:42 by philippedamoune  ###   ########.fr       */
+/*   Updated: 2017/07/24 17:07:28 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,39 @@ int		lem_multiple_paths(t_list *paths, int paths_max)
 	return (0);
 }
 
+void 	lem_set_weight(t_list *links, t_room *room)
+{
+	static int	i = 1;
+
+	while (links)
+	{
+		room = links->content;
+		if (room->position < START - 1 && (room->weight > i || !room->busy))
+		{
+			room->busy = 1;
+			room->weight = i;
+			i++;
+			lem_set_weight(room->links, room);
+			i--;
+		}
+		links = links->next;
+	}
+}
+
 int		lem_solver(void)
 {
 	// int		len;
+	t_room		*end;
 
 	ft_printf("\n========   SOLVER   ========\n");
+	end = lem_get_end(g_rooms);
+	end->busy = 1;
+	lem_set_weight(end->links, end);
+	end->busy = 0;
+	// lem_display(1, "rooms");
 	lem_get_paths();
+
+
 	// ft_printf("nbre paths = %d\n", lem_nb_paths_max(g_paths));
 	// ft_printf("nb paths max = %d\n", ft_lstlen(g_paths));
 	lem_multiple_paths(g_paths, lem_nb_paths_max(g_paths));

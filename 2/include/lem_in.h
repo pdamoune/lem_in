@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 11:25:19 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/20 18:12:27 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/24 16:29:29 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ struct	s_room
 	int		room_number;
 	int		position;
 	int		busy;
+	int		weight;
 	int		coor[2];
 	t_list	*links;
 };
@@ -61,6 +62,7 @@ int		lem_is_link(char *line);
 
 int		lem_solver(void);
 t_room	*lem_get_start(t_list *rooms);
+t_room	*lem_get_end(t_list *rooms);
 int		lem_get_paths(void);
 
 #endif

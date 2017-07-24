@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 18:11:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/21 19:45:54 by philippedamoune  ###   ########.fr       */
+/*   Updated: 2017/07/24 17:09:41 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,12 @@ int		lem_get_paths(void)
 	t_room	*room;
 	t_list	*path;
 	t_list	*links;
+	int		i;
 
 	path = NULL;
 	room = lem_get_start(g_rooms);
-	room->busy = 1;
 	links = room->links;
+	i = 1;
 	while (links)
 	{
 		room = links->content;

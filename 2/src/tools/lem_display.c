@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/21 18:19:08 by philippedamoune  ###   ########.fr       */
+/*   Updated: 2017/07/24 17:00:46 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,17 @@ void 	lem_disp_rooms(t_list *rooms)
 	ft_printf("%2cROOMS\n---------------------\n", 0);
 	while (rooms)
 	{
-		ft_printf("%s\n", ((t_room *)rooms->content)->name);
+		ft_printf("{cya}%-10s{eoc} | ", ((t_room *)rooms->content)->name);
 		links = ((t_room *)rooms->content)->links;
 		while (links)
 		{
-			ft_printf("       %s\n", ((t_room *)links->content)->name);
-			links = links->next;
+			ft_printf("%-3s", ((t_room *)links->content)->name);
+			if ((links = links->next))
+				ft_printf(" - ");
 		}
+		ft_printf(" \n     |{gre}%d{eoc}|\n", ((t_room *)rooms->content)->weight);
+
+		ft_printf("----\n");
 		// ft_printf("=== %s\n", ((t_room *)g_rooms->content)->name);
 		rooms = rooms->next;
 	}

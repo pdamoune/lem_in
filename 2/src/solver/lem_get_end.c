@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_parser.c                                       :+:      :+:    :+:   */
+/*   lem_get_end.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/10 13:43:33 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/24 15:46:45 by pdamoune         ###   ########.fr       */
+/*   Created: 2017/07/24 16:28:41 by pdamoune          #+#    #+#             */
+/*   Updated: 2017/07/24 16:28:51 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/lem_in.h"
+#include "../../include/lem_in.h"
 
-int		lem_parser(void)
+t_room		*lem_get_end(t_list *rooms)
 {
-	ft_printf("\n========   PARSING   ========\n");
-	lem_get_data();
-	lem_get_ants(g_data);
-	lem_get_rooms();
-
-	ft_printf("\n======== FIN PARSING ========\n");
-	return (0);
+	while (rooms && ((t_room *)rooms->content)->position != END - 1)
+		rooms = rooms->next;
+	if (!rooms)
+		return (NULL); // no start
+	return (rooms->content);
 }
