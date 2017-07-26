@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 03:17:22 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/24 19:22:10 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/25 13:46:13 by philippedamoune  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void 	lem_set_weight(t_list *links, t_room *room)
 	while (links)
 	{
 		room = links->content;
-		if (room->position < START - 1 && (room->weight > i || !room->busy))
+		if (room->position < END - 1 && (room->weight > i || !room->busy))
 		{
 			// ft_printf("name = %s | ", room->name);
 			// ft_printf("i = %d\n", i);
