@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 17:59:40 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/24 15:46:53 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/26 16:58:54 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int	cmp(t_room *room, char *data)
 
 void 	lem_set_link(t_room *room1, t_room *room2)
 {
+	if (room1->room_number == room2->room_number)
+		return ;
 	if (!room1->links)
 		room1->links = ft_lstptr(room2);
 	else if (!ft_lstfind(room1->links, &room2->room_number, &cmp_room_number))

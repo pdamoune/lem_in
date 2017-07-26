@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/24 20:06:58 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/26 18:22:12 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void 	lem_disp_rooms(t_list *rooms)
 	ft_printf("%2cROOMS\n---------------------\n", 0);
 	while (rooms)
 	{
+		if ((((t_room *)rooms->content)->position) != END - 1)
+		{
+			rooms = rooms->next;
+			continue ;
+		}
 		ft_printf("|{mag}%d{eoc}| ", ((t_room *)rooms->content)->position);
 		ft_printf("|{red}%d{eoc}| ", ((t_room *)rooms->content)->busy);
 		ft_printf("|{gre}%-11d{eoc}| ", ((t_room *)rooms->content)->weight);
@@ -56,7 +61,7 @@ void 	lem_disp_paths(t_list *paths)
 {
 	t_list	*path;
 
-	ft_printf("%2cPATHS\n---------------------\n", 0);
+	ft_printf("%2c{cya}PATHS\n---------------------\n", 0);
 	if (!paths)
 		return ;
 	while (paths)
@@ -71,7 +76,7 @@ void 	lem_disp_paths(t_list *paths)
 		paths = paths->next;
 	}
 	ft_printf("\n");
-	ft_printf("=====================\n\n");
+	ft_printf("====================={eoc}\n\n");
 }
 
 void 	lem_disp_list(t_list *paths)
@@ -96,14 +101,18 @@ void 	lem_disp_mult_paths(t_list *m_paths)
 	t_list	*list_paths;
 	t_list	*path;
 	int		i;
+	int		j;
 
 	i = 1;
-	ft_printf("%2cMULTIPLE\n---------------------\n", 0);
+	j = 1;
+	ft_printf("{mag}%2cMULTIPLE\n---------------------\n", 0);
 	if (!m_paths)
 		return ;
 	while (m_paths)
 	{
 		list_paths = m_paths->content;
+		ft_printf("\n==========   %de multiple chemin   ==========\n", j++);
+		// ft_putendl("test");
 		while (list_paths)
 		{
 			ft_printf("\n----   %de chemin   ----\n", i++);
@@ -117,10 +126,11 @@ void 	lem_disp_mult_paths(t_list *m_paths)
 		}
 		i = 1;
 		ft_printf("\n");
+		ft_printf("\n");
 		m_paths = m_paths->next;
 	}
 	ft_printf("\n");
-	ft_printf("=====================\n\n");
+	ft_printf("=====================\n\n{eoc}");
 }
 
 void 	lem_display(int args, ...)
@@ -128,7 +138,7 @@ void 	lem_display(int args, ...)
 	va_list		ap;
 	char		*arg;
 
-	ft_printf("\n================= DISPLAY =================\n");
+	ft_printf("\n{bla}================= DISPLAY ================={eoc}\n");
 	va_start(ap, args);
 	while (args--)
 	{
@@ -148,5 +158,5 @@ void 	lem_display(int args, ...)
 
 		// if (!ft_strcmp("multiple", arg))
 	}
-	ft_printf("=============== FIN DISPLAY =================\n\n");
+	ft_printf("{bla}=============== FIN DISPLAY =================\n\n{eoc}");
 }
