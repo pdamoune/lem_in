@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/28 19:31:49 by philippedamoune  ###   ########.fr       */
+/*   Updated: 2017/07/31 16:26:52 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void 	lem_disp_paths(t_list *paths)
 {
 	t_list	*path;
 
+	if (!g_paths)
+		return ;
 	ft_printf("%2c{cya}PATHS\n---------------------\n", 0);
 	if (!paths)
 		return ;

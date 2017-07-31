@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 18:11:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/28 20:04:42 by philippedamoune  ###   ########.fr       */
+/*   Updated: 2017/07/31 20:15:31 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int		lem_test_paths(t_list *path, t_room *room, t_list *links, int rayon)
 	links_tmp = links;
 	room_tmp = room;
 
+
 	if (room->position == END - 1 && i == rayon)
 		return (1);
 	if (i >= rayon || room->position == END - 1)
@@ -174,7 +175,7 @@ int		lem_get_multiple_paths(t_list **multiple, t_list *path, size_t len)
 {
 	if (!len)
 	{
-		lem_display(1, "multiple");
+		// lem_display(1, "multiple");
 		return (1);
 	}
 	while (path)
@@ -187,22 +188,6 @@ int		lem_get_multiple_paths(t_list **multiple, t_list *path, size_t len)
 		}
 		if (!lem_is_busy(path->content))
 		{
-			if (len > 10)
-			{
-				if (*multiple)
-					if ((*multiple)->next)
-						if ((*multiple)->next->next)
-							if ((*multiple)->next->next->next)
-								if ((*multiple)->next->next->next->next)
-									if ((*multiple)->next->next->next->next->next)
-										if ((*multiple)->next->next->next->next->next->next)
-											if ((*multiple)->next->next->next->next->next->next->next)
-												if ((*multiple)->next->next->next->next->next->next->next->next)
-													if ((*multiple)->next->next->next->next->next->next->next->next)
-								lem_display(1, "list", (*multiple)->next->next->next->next->next->next->next->next->content);
-				// ft_putnbrel(ft_lstlen(*multiple));
-			}
-
 			lem_busy_path(path->content);
 			ft_lstadd_last(multiple, ft_lstptr(path->content));
 			if (!lem_get_multiple_paths(multiple, g_paths, --len))
@@ -262,69 +247,41 @@ int		lem_get_paths(void)
 	room = lem_get_start(g_rooms);
 	path = ft_lstptr(room);
 	lem_clr_path(g_rooms);
-	// lem_display(1, "rooms");
 
-
-
-
-	// while (ft_lstlen(g_multiple_paths) < (size_t)len)
-	// {
-	// 	++i;
-	// int		i;
 	int ret;
 	len = ft_lstlen(room->links);
 	links = lem_get_start(g_rooms)->links;
-	// lem_display(1, "rooms", path);
 	ret = 0;
 	while (++rayon <= 15)
 	{
 		while (links)
 		{
 			room = links->content;
+			room->busy = 1;
+			ft_printf("= %s\n", room->name);
+
 			ft_lstadd_last(&path, ft_lstptr(room));
 			ret += lem_test_paths(path, room, room->links, rayon);
+			room->busy = 0;
 			// ft_printf("ret = %d\n", ret);
 			ft_lstclr_last(&path);
 			links = links->next;
 		}
-		ft_putnbrel(ret);
+		lem_display(1, "paths");
+		ft_putnbrel(ft_lstlen(g_paths));
 		if (ret)
 		{
 			while (ft_lstlen(g_multiple_paths) + 1 <= (size_t)ret)
 			{
-				// ft_putnbrel(ret);
-				// lem_display(1, "paths");
 				lem_display(1, "list", room->links);
 				lem_check_multipaths(g_paths, room->links, g_ants, ft_lstlen(g_multiple_paths) + 1);
 			}
-			// lem_check_multipaths(g_paths, room->links, g_ants, ft_lstlen(g_multiple_paths) + 1);
-			// lem_display(1, "multiple");
-			if (ft_lstlen(g_multiple_paths) == (size_t)len)
-			{
-				lem_display(1, "multiple");
 
-				break ;
-			}
 		}
 		ret = 0;
 		links = lem_get_start(g_rooms)->links;
 	}
 	ft_printf("%d\n", sizeof(int));
 
-	// 	if (!g_paths)
-	// 		continue;
-	// 	while (lem_check_multipaths(g_paths, room->links, g_ants, ft_lstlen(g_multiple_paths) + 1))
-	// 		;
-	//
-	// 		// lem_check_multipaths(g_paths, room->links, g_ants, ft_lstlen(g_multiple_paths) + 1);
-	// 	// ft_printf("len = %d\n",
-	// 	// ft_lstlen(ft_lstlast(((t_list *)ft_lstlast(g_multiple_paths)->content)->content)));
-	// 	// ft_printf("i = %d\n", i);
-	// 	// if (i > 19)
-	// 	{
-	// 		// exit (0);
-	// 	}
-	// }
-	// lem_display(1, "list", ((t_list *)(ft_lstlast(ft_lstlast(g_multiple_paths)->content))->content));
 	return (ft_lstsortlen(g_paths));
 }
