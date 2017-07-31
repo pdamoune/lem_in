@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/26 18:22:12 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/28 19:31:49 by philippedamoune  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void 	lem_disp_rooms(t_list *rooms)
 	ft_printf("%2cROOMS\n---------------------\n", 0);
 	while (rooms)
 	{
-		if ((((t_room *)rooms->content)->position) != END - 1)
-		{
-			rooms = rooms->next;
-			continue ;
-		}
+		// if ((((t_room *)rooms->content)->position) != END - 1)
+		// {
+		// 	rooms = rooms->next;
+		// 	continue ;
+		// }
 		ft_printf("|{mag}%d{eoc}| ", ((t_room *)rooms->content)->position);
 		ft_printf("|{red}%d{eoc}| ", ((t_room *)rooms->content)->busy);
 		ft_printf("|{gre}%-11d{eoc}| ", ((t_room *)rooms->content)->weight);
@@ -69,7 +69,8 @@ void 	lem_disp_paths(t_list *paths)
 		path = paths->content;
 		while (path)
 		{
-			ft_printf("%s - ", ((t_room *)path->content)->name);
+			ft_printf("%2s ", ((t_room *)path->content)->name);
+			ft_printf("|%d| - ", ((t_room *)path->content)->busy);
 			path = path->next;
 		}
 		ft_printf("\n");
@@ -89,7 +90,7 @@ void 	lem_disp_list(t_list *paths)
 	while (paths)
 	{
 		path = paths->content;
-		ft_printf("%s - ", path->name);
+		ft_printf("%5s - ", path->name);
 		paths = paths->next;
 	}
 	ft_printf("\n");
@@ -119,7 +120,7 @@ void 	lem_disp_mult_paths(t_list *m_paths)
 			path = list_paths->content;
 			while (path)
 			{
-				ft_printf("%s - ", ((t_room *)path->content)->name);
+				ft_printf("%2s - ", ((t_room *)path->content)->name);
 				path = path->next;
 			}
 			list_paths = list_paths->next;
@@ -138,7 +139,7 @@ void 	lem_display(int args, ...)
 	va_list		ap;
 	char		*arg;
 
-	ft_printf("\n{bla}================= DISPLAY ================={eoc}\n");
+	// ft_printf("\n{bla}================= DISPLAY ================={eoc}\n");
 	va_start(ap, args);
 	while (args--)
 	{
@@ -158,5 +159,5 @@ void 	lem_display(int args, ...)
 
 		// if (!ft_strcmp("multiple", arg))
 	}
-	ft_printf("{bla}=============== FIN DISPLAY =================\n\n{eoc}");
+	// ft_printf("{bla}=============== FIN DISPLAY =================\n\n{eoc}");
 }

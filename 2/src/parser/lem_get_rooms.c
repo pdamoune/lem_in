@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 18:30:45 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/24 15:46:51 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/28 15:23:33 by philippedamoune  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,5 @@ int		lem_get_rooms(void)
 	free(room);
 	if (~(start_end & ST_END) & ST_END)
 		return (ft_error(1, ST_END, INFO, "Missing start or end", &lem_free));
-	return (1);
+	return (ft_lstlen(g_rooms));
 }

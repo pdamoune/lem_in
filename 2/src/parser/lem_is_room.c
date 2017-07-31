@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 18:43:11 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/24 17:47:52 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/28 14:06:56 by philippedamoune  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ int		lem_is_room(t_room *room, char *line)
 	room->coor[0] = ft_atoi(&line[len]);
 	room->name = ft_strsub(line, 0, len - 1);
 	room->room_number = ++numero_rooms;
-	room->weight = INT_MAX;
+	room->weight = -1;
 	return (1);
 }

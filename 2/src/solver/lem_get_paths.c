@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 18:11:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/27 19:27:41 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/28 20:04:42 by philippedamoune  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int		lem_find_path(t_list *path, t_room *room)
 }
 
 
-int		lem_test_paths(t_list *path, t_room *room, t_list *links, int n)
+int		lem_test_paths(t_list *path, t_room *room, t_list *links, int rayon)
 {
 	static int	i = 1;
 	t_list		*links_tmp;
@@ -131,23 +131,21 @@ int		lem_test_paths(t_list *path, t_room *room, t_list *links, int n)
 	links_tmp = links;
 	room_tmp = room;
 
-	if (room->position == END - 1 && i == n)
+	if (room->position == END - 1 && i == rayon)
 		return (1);
-	if (i > n)
+	if (i >= rayon || room->position == END - 1)
 		return (0);
 	while (links_tmp)
 	{
 		room_tmp = links_tmp->content;
 		if (!room_tmp->busy && room_tmp->position != START - 1)
 		{
-
 			room_tmp->busy = 1;
 			i++;
 			ft_lstadd_last(&path, ft_lstptr(room_tmp));
-			if (lem_test_paths(path, room_tmp, room_tmp->links, n))
+			if (lem_test_paths(path, room_tmp, room_tmp->links, rayon))
 			{
 				ft_lstadd_last(&g_paths, ft_lstptr(ft_lstdup(path)));
-
 			}
 
 			ft_lstclr_last(&path);
@@ -156,20 +154,55 @@ int		lem_test_paths(t_list *path, t_room *room, t_list *links, int n)
 		}
 		links_tmp = links_tmp->next;
 	}
+	if (i == 1)
+	{
+		// lem_display(1, "paths");
+		// lem_display(1, "list", path);
+		if (!g_paths)
+			return (0);
+		room_tmp = ((t_list *)(ft_lstlast(g_paths))->content)->next->content;
+		if (room_tmp->room_number == room->room_number)
+			return (1);
+		// lem_get_multiple_paths()
+		// ft_putnbrel(ft_lstlen(g_multiple_paths));
+		// ft_putnbrel(rayon);
+	}
 	return (0);
 }
 
 int		lem_get_multiple_paths(t_list **multiple, t_list *path, size_t len)
 {
-	if ( !len)
+	if (!len)
 	{
-		lem_clr_path(g_rooms);
+		lem_display(1, "multiple");
 		return (1);
 	}
 	while (path)
 	{
+		// ft_putnbrel(len);
+		// if (ft_lstlen(g_multiple_paths) == 19 && len == 1)
+		{
+			// lem_display(1, "paths");
+			// lem_display(1, "list", path->content);
+		}
 		if (!lem_is_busy(path->content))
 		{
+			if (len > 10)
+			{
+				if (*multiple)
+					if ((*multiple)->next)
+						if ((*multiple)->next->next)
+							if ((*multiple)->next->next->next)
+								if ((*multiple)->next->next->next->next)
+									if ((*multiple)->next->next->next->next->next)
+										if ((*multiple)->next->next->next->next->next->next)
+											if ((*multiple)->next->next->next->next->next->next->next)
+												if ((*multiple)->next->next->next->next->next->next->next->next)
+													if ((*multiple)->next->next->next->next->next->next->next->next)
+								lem_display(1, "list", (*multiple)->next->next->next->next->next->next->next->next->content);
+				// ft_putnbrel(ft_lstlen(*multiple));
+			}
+
 			lem_busy_path(path->content);
 			ft_lstadd_last(multiple, ft_lstptr(path->content));
 			if (!lem_get_multiple_paths(multiple, g_paths, --len))
@@ -179,10 +212,11 @@ int		lem_get_multiple_paths(t_list **multiple, t_list *path, size_t len)
 			}
 			else
 				return (1);
+			lem_clr_path(path->content);
 		}
 		path = path->next;
 	}
-	ft_lstclr_last(multiple);
+	// ft_lstclr_last(multiple);
 	return (0);
 }
 
@@ -199,62 +233,98 @@ int		lem_check_multipaths(t_list *paths, t_list *links, int ants, int i)
 	t_list		*multiple;
 
 	multiple = NULL;
-	// ft_printf("check = %d\n",
+	// ft_printf("check = %d\rayon",
 	lem_get_multiple_paths(&multiple, g_paths, i);
 	lem_clr_path(g_rooms);
-	if (ft_lstlen(multiple))
+	// ft_putnbrel(i);
+	// if (ft_lstlen(multiple) == (size_t)i)
 	{
 		j++;
 		ft_lstadd_last(&g_multiple_paths, ft_lstptr(multiple));
+		return (1);
 	}
-	ft_putnbrel(j);
+	return (0);
 	// lem_display(1, "paths");
-	// lem_display(1, "multiple");
-	return (1);
 
 }
 
+#include <stdio.h>
 
 int		lem_get_paths(void)
 {
 	t_room	*room;
 	t_list	*path;
-	size_t i = -1;
+	t_list	*links;
+	int		rayon = 1;
+	(void)&rayon;
 	int 	len;
 
 	room = lem_get_start(g_rooms);
 	path = ft_lstptr(room);
 	lem_clr_path(g_rooms);
+	// lem_display(1, "rooms");
+
+
+
+
+	// while (ft_lstlen(g_multiple_paths) < (size_t)len)
+	// {
+	// 	++i;
+	// int		i;
+	int ret;
 	len = ft_lstlen(room->links);
-	while (ft_lstlen(g_multiple_paths) < (size_t)len)
+	links = lem_get_start(g_rooms)->links;
+	// lem_display(1, "rooms", path);
+	ret = 0;
+	while (++rayon <= 15)
 	{
-		++i;
-		lem_test_paths(path, room, room->links, i);
-		// lem_display(1, "paths");
-		if (!g_paths)
-			continue;
-		while (!g_multiple_paths || ft_lstlen(((t_list *)(ft_lstlast(ft_lstlast(g_multiple_paths)->content))->content)) < i)
+		while (links)
 		{
-			if (ft_lstlen(g_multiple_paths) >= (size_t)len)
-				break ;
-			lem_check_multipaths(g_paths, room->links, g_ants, ft_lstlen(g_multiple_paths) + 1);
-
-			// lem_display(1, "multiple");
-
-			// ft_printf("len = %d\n", ft_lstlen(((t_list *)(ft_lstlast(ft_lstlast(g_multiple_paths)->content))->content)));
-			// ft_printf("i = %d\n", i);
-			// if (ft_lstlen(g_multiple_paths) == 7)
-			// 	exit(0);
+			room = links->content;
+			ft_lstadd_last(&path, ft_lstptr(room));
+			ret += lem_test_paths(path, room, room->links, rayon);
+			// ft_printf("ret = %d\n", ret);
+			ft_lstclr_last(&path);
+			links = links->next;
 		}
+		ft_putnbrel(ret);
+		if (ret)
+		{
+			while (ft_lstlen(g_multiple_paths) + 1 <= (size_t)ret)
+			{
+				// ft_putnbrel(ret);
+				// lem_display(1, "paths");
+				lem_display(1, "list", room->links);
+				lem_check_multipaths(g_paths, room->links, g_ants, ft_lstlen(g_multiple_paths) + 1);
+			}
 			// lem_check_multipaths(g_paths, room->links, g_ants, ft_lstlen(g_multiple_paths) + 1);
-		// ft_printf("len = %d\n",
-		// ft_lstlen(ft_lstlast(((t_list *)ft_lstlast(g_multiple_paths)->content)->content)));
-		// ft_printf("i = %d\n", i);
-		// if (i > 19)
-		{
-			// exit (0);
+			// lem_display(1, "multiple");
+			if (ft_lstlen(g_multiple_paths) == (size_t)len)
+			{
+				lem_display(1, "multiple");
+
+				break ;
+			}
 		}
+		ret = 0;
+		links = lem_get_start(g_rooms)->links;
 	}
+	ft_printf("%d\n", sizeof(int));
+
+	// 	if (!g_paths)
+	// 		continue;
+	// 	while (lem_check_multipaths(g_paths, room->links, g_ants, ft_lstlen(g_multiple_paths) + 1))
+	// 		;
+	//
+	// 		// lem_check_multipaths(g_paths, room->links, g_ants, ft_lstlen(g_multiple_paths) + 1);
+	// 	// ft_printf("len = %d\n",
+	// 	// ft_lstlen(ft_lstlast(((t_list *)ft_lstlast(g_multiple_paths)->content)->content)));
+	// 	// ft_printf("i = %d\n", i);
+	// 	// if (i > 19)
+	// 	{
+	// 		// exit (0);
+	// 	}
+	// }
 	// lem_display(1, "list", ((t_list *)(ft_lstlast(ft_lstlast(g_multiple_paths)->content))->content));
 	return (ft_lstsortlen(g_paths));
 }

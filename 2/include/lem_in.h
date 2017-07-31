@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 11:25:19 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/24 16:29:29 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/07/28 15:22:23 by philippedamoune  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_list	*g_rooms;
 t_list	*g_paths;
 t_list	*g_multiple_paths;
 int		g_ants;
+int		g_nb_rooms;
 
 void	lem_set_globales(void);
 void 	lem_display(int args, ...);

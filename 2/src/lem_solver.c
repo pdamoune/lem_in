@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 03:17:22 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/25 13:46:13 by philippedamoune  ###   ########.fr       */
+/*   Updated: 2017/07/28 15:22:41 by philippedamoune  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,14 +156,15 @@ void 	lem_set_weight(t_list *links, t_room *room)
 	while (links)
 	{
 		room = links->content;
-		if (room->position < END - 1 && (room->weight > i || !room->busy))
+		if (room->position < END - 1 && (room->weight < i && !room->busy))
 		{
 			// ft_printf("name = %s | ", room->name);
 			// ft_printf("i = %d\n", i);
 			room->busy = 1;
 			room->weight = i;
 			i++;
-			lem_set_weight(room->links, room);
+			if (room->position < START - 1)
+				lem_set_weight(room->links, room);
 			i--;
 		}
 		links = links->next;
@@ -180,9 +181,11 @@ int		lem_solver(void)
 	end->busy = 1;
 	lem_set_weight(end->links, end);
 	// lem_display(1, "rooms");
-	end->weight = 0;
-	end->busy = 0;
-	// lem_display(1, "rooms");
+	// // lem_display(1, "rooms");
+	// end->weight = 0;
+	// end->busy = 0;
+	// // lem_display(1, "rooms");
+
 	lem_get_paths();
 
 
