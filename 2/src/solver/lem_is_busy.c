@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lem_is_busy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/10 11:25:38 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/08/01 20:11:10 by pdamoune         ###   ########.fr       */
+/*   Created: 2017/08/01 12:30:41 by pdamoune          #+#    #+#             */
+/*   Updated: 2017/08/01 12:31:09 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/lem_in.h"
+# include "../../include/lem_in.h"
 
-int		main(void)
+int 	lem_is_busy(t_list *path)
 {
-	lem_set_globales();
-	lem_parser();
-	lem_display(1, "rooms");
-	lem_solver();
-	// lem_display(1, "rooms");
-	// lem_display(1, "paths");
-	lem_free(0);
+	while (path)
+	{
+		if (((t_room *)(path->content))->busy && !((t_room *)(path->content))->position)
+			return (1);
+		path = path->next;
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/26 22:40:04 by pdamoune          #+#    #+#              #
-#    Updated: 2017/08/01 12:33:12 by pdamoune         ###   ########.fr        #
+#    Updated: 2017/08/01 20:19:36 by pdamoune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SOURCES	=	src/main.c \
 			src/parser/lem_is_room.c \
 			src/parser/lem_is_link.c \
 			src/lem_solver.c \
+			src/solver/lem_get_paths.c \
 			src/solver/lem_get_start.c \
 			src/solver/lem_get_end.c \
 			src/solver/lem_set_weight.c \

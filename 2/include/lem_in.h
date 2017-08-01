@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 11:25:19 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/08/01 12:35:01 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/01 20:19:37 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		lem_is_link(char *line);
 int		lem_solver(void);
 t_room	*lem_get_start(t_list *rooms);
 t_room	*lem_get_end(t_list *rooms);
-// int		lem_get_paths(void);
+int		lem_get_paths(void);
 void	lem_set_weight(void);
 void 	lem_clr_path(t_list *path);
 void 	lem_busy_path(t_list *path);
