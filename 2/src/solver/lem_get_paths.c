@@ -6,46 +6,11 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 18:11:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/31 20:15:31 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/01 12:33:15 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lem_in.h"
-
-// static int		g_i = 0;
-
-static void 	lem_busy_path(t_list *path)
-{
-	while (path)
-	{
-		if (((t_room *)(path->content))->position != END - 1)
-			((t_room *)(path->content))->busy = 1;
-		path = path->next;
-	}
-}
-
-static void 	lem_clr_path(t_list *path)
-{
-	while (path)
-	{
-		if (((t_room *)(path->content))->position != START - 1)
-			((t_room *)(path->content))->busy = 0;
-		path = path->next;
-	}
-}
-
-static int 	lem_is_busy(t_list *path)
-{
-	// lem_display(1, "list", path);
-	while (path)
-	{
-		if (((t_room *)(path->content))->busy && !((t_room *)(path->content))->position)
-			return (1);
-		path = path->next;
-	}
-	// ft_printf("%s\n", ((t_room *)(path->content))->name);
-	return (0);
-}
 
 void 	disp(t_list *path)
 {
