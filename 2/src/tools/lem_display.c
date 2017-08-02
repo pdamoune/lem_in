@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/31 16:26:52 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/02 12:39:57 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void 	lem_disp_mult_paths(t_list *m_paths)
 			path = list_paths->content;
 			while (path)
 			{
-				ft_printf("%2s - ", ((t_room *)path->content)->name);
+				ft_printf("%5s - ", ((t_room *)path->content)->name);
 				path = path->next;
 			}
 			list_paths = list_paths->next;

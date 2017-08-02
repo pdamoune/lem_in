@@ -45,7 +45,6 @@ int		lem_check_path(t_list *paths, t_list *other_path)
 	while (paths)
 	{
 		r1 = ((t_room *)paths->content)->room_number;
-		ft_printf("paths = %d\n", r1);
 		while (tmp)
 		{
 			r2 = ((t_room *)tmp->content)->room_number;
@@ -110,26 +109,23 @@ int		lem_len_multiple(t_list *multiple)
 
 int		lem_try_rayon(t_list **multiple, t_list *paths, int len)
 {
-	// static int	i = 0;
 
-	if (len + 1 == (int)ft_lstlen(*multiple))
+	if (ft_lstlen(g_multiple_paths) + 1 == ft_lstlen(*multiple))
 	{
 		ft_lstadd_last(&g_multiple_paths, ft_lstptr(ft_lstdup(*multiple)));
 		return (1);
 	}
 	while (paths)
 	{
-		// ft_putnbrel(i++);
 		if (!lem_is_busy(paths->content))
 		{
 			lem_busy_path(paths->content);
 			ft_lstadd_last(multiple, ft_lstptr(paths->content));
 			if (lem_try_rayon(multiple, g_paths, len))
 			{
-				len++;
-				return (1);
+				// 2 eme algorythme
+				// return (1);
 			}
-			else
 			{
 				lem_clr_path(paths->content);
 				ft_lstclr_last(multiple);
@@ -137,6 +133,7 @@ int		lem_try_rayon(t_list **multiple, t_list *paths, int len)
 		}
 		paths = paths->next;
 	}
+
 	return (0);
 }
 
@@ -154,6 +151,7 @@ int		lem_test_paths(t_list *path, t_room *room, int stop, int rayon)
 {
 	t_list	*multiple;
 	t_list	*links;
+	// int ret;
 
 	path = ft_lstptr(lem_get_start(g_rooms));
 	links = room->links;
@@ -162,15 +160,11 @@ int		lem_test_paths(t_list *path, t_room *room, int stop, int rayon)
 		lem_get_path(path, room->links, room, rayon);
 		if (!g_paths)
 			continue ;
-			ft_putnbrel(rayon);
+		// ft_printf("rayon = %d\n", rayon);
 		multiple = NULL;
-		while (lem_try_rayon(&multiple, g_paths, ft_lstlen(g_multiple_paths)))
-			;
-		// rajouter une condition qui permet de retourner dans la fonction
-		// tout en gardant le meme rayon
-		// inverser les start
-		if (multiple)
-			lem_display(1, "multiple");
+		lem_try_rayon(&multiple, g_paths, ft_lstlen(g_multiple_paths));
+		lem_display(2, "multiple", "paths");
+
 		lem_clr_path(g_rooms);
 		if ((int)ft_lstlen(g_multiple_paths) >= stop)
 			break ;
