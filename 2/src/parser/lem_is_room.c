@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 18:43:11 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/31 14:38:16 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/02 17:59:31 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ int		lem_is_room(t_room *room, char *line)
 	static int	numero_rooms = 0;
 	int			len;
 
+	if (line[0] == 'L')
+		return (0);
 	len = ft_strlen(line);
 	while (len && ft_isdigit(line[--len]))
 		;
 	if (line[len] != ' ' || !ft_isint(&line[len + 1]))
 		return (0);
 	room->coor[1] = ft_atoi(&line[len + 1]);
+	if (!ft_isdigit(line[--len]))
+		return (0);
 	while (len && ft_isdigit(line[--len]))
 		;
 	if (!len || !ft_isint(&line[++len]))

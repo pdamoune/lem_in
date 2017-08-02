@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 21:44:14 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/09 18:44:13 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/02 14:29:30 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		lem_set_room(t_list **list_rooms, t_room *room, int ret)
 	static int rm_nb = 0;
 
 	tmp = ft_lstptr(room);
-	!*list_rooms ? *list_rooms = tmp : ft_lstadd_last(list_rooms, tmp);
+	!*list_rooms ? *list_rooms = tmp : (void)ft_lstadd_last(list_rooms, tmp);
 	if (room->pos)
 	{
 		if (START - 1 & (room->pos - 1 & ret))

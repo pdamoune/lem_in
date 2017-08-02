@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 11:25:19 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/08/01 20:19:37 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/02 16:52:05 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ void	lem_set_weight(void);
 void 	lem_clr_path(t_list *path);
 void 	lem_busy_path(t_list *path);
 int 	lem_is_busy(t_list *path);
+int 	lem_is_possible(t_list *path, int rayon);
+int		lem_multiple_paths(t_list **multiple, t_list *paths, int len);
 
 #endif

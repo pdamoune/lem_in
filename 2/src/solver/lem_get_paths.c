@@ -1,40 +1,5 @@
 #include "../../include/lem_in.h"
 
-int		lem_nb_paths_max(t_list *paths)
-{
-	t_room	*room;
-	int		paths_max;
-
-	paths_max = 0;
-	while (paths)
-	{
-		room = ((t_list *)paths->content)->content;
-		if (!room->busy)
-		{
-			 room->busy = 1;
-			 paths_max++;
-		}
-		paths = paths->next;
-	}
-	(void)&paths;
-	return (paths_max);
-}
-
-
-int 	lem_is_possible(t_list *path, int rayon)
-{
-	t_room	*room;
-
-	while (path)
-	{
-		room = path->content;
-		if (room->busy || room->weight > rayon)
-			return (1);
-		path = path->next;
-	}
-	return (0);
-}
-
 int		lem_check_path(t_list *paths, t_list *other_path)
 {
 	int		r1;
@@ -86,54 +51,6 @@ int 	lem_get_path(t_list *path, t_list *links, t_room *room, int rayon)
 		}
 		links_tmp = links_tmp->next;
 	}
-	// if (len == 1)
-	// {
-	// 	rayon++;
-	// 	lem_get_path(path, links, room, rayon);
-	// }
-	return (0);
-}
-
-int		lem_len_multiple(t_list *multiple)
-{
-	int		len;
-
-	len = 0;
-	while (multiple)
-	{
-		len += ft_lstlen(multiple->content);
-		multiple = multiple->next;
-	}
-	return (len);
-}
-
-int		lem_try_rayon(t_list **multiple, t_list *paths, int len)
-{
-
-	if (ft_lstlen(g_multiple_paths) + 1 == ft_lstlen(*multiple))
-	{
-		ft_lstadd_last(&g_multiple_paths, ft_lstptr(ft_lstdup(*multiple)));
-		return (1);
-	}
-	while (paths)
-	{
-		if (!lem_is_busy(paths->content))
-		{
-			lem_busy_path(paths->content);
-			ft_lstadd_last(multiple, ft_lstptr(paths->content));
-			if (lem_try_rayon(multiple, g_paths, len))
-			{
-				// 2 eme algorythme
-				// return (1);
-			}
-			{
-				lem_clr_path(paths->content);
-				ft_lstclr_last(multiple);
-			}
-		}
-		paths = paths->next;
-	}
-
 	return (0);
 }
 
@@ -151,20 +68,21 @@ int		lem_test_paths(t_list *path, t_room *room, int stop, int rayon)
 {
 	t_list	*multiple;
 	t_list	*links;
-	// int ret;
 
 	path = ft_lstptr(lem_get_start(g_rooms));
 	links = room->links;
-	while (++rayon < (int)ft_lstlen(g_rooms))
+	while (++rayon <= (int)ft_lstlen(g_rooms))
 	{
 		lem_get_path(path, room->links, room, rayon);
 		if (!g_paths)
 			continue ;
-		// ft_printf("rayon = %d\n", rayon);
+		if (rayon == 2)
+		{
+			ft_printf("On jete tout dans end\n");
+			break ;
+		}
 		multiple = NULL;
-		lem_try_rayon(&multiple, g_paths, ft_lstlen(g_multiple_paths));
-		lem_display(2, "multiple", "paths");
-
+		lem_multiple_paths(&multiple, g_paths, rayon);
 		lem_clr_path(g_rooms);
 		if ((int)ft_lstlen(g_multiple_paths) >= stop)
 			break ;

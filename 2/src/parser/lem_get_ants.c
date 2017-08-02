@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:54:50 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/24 15:46:49 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/02 19:12:12 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,16 @@
 
 int		lem_get_ants(t_list *data)
 {
+	int	i;
+
+	i = 0;
 	while (data && lem_is_com(data->content) > 0)
 		data = data->next;
+	while (((char *)data->content)[i] && ft_isdigit(((char *)data->content)[i++]))
+		;
+	if (((char *)data->content)[i])
+		return (ft_error(1, BAD_ANTS, INFO, "Ants' number is incorrect",
+		&lem_free));
 	if (!ft_isint(data->content))
 		return (ft_error(1, BAD_ANTS, INFO, "Ants' number is not an int"
 		, &lem_free));

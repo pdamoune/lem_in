@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 18:30:45 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/28 15:23:33 by philippedamoune  ###   ########.fr       */
+/*   Updated: 2017/08/02 19:29:18 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		lem_set_room(t_room *room)
 {
-	!g_rooms ? g_rooms = ft_lstptr(room) :
+	!g_rooms ? g_rooms = ft_lstptr(room) : (void)
 	ft_lstadd_last(&g_rooms, ft_lstptr(room));
 	return (room->position);
 }
@@ -50,9 +50,13 @@ int		lem_get_rooms(void)
 		if (lem_is_room(room, data->content))
 			start_end |= lem_set_room(room);
 		else if (lem_is_link(data->content))
+		{
 			free(room);
+		}
 		else
+		{
 			break ;
+		}
 		room = ft_memalloc(sizeof(t_room));
 	}
 	free(room);

@@ -6,7 +6,7 @@
 #    By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/26 22:40:04 by pdamoune          #+#    #+#              #
-#    Updated: 2017/08/01 20:19:36 by pdamoune         ###   ########.fr        #
+#    Updated: 2017/08/02 15:08:35 by pdamoune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ SOURCES	=	src/main.c \
 			src/solver/lem_set_weight.c \
 			src/solver/lem_clr_path.c \
 			src/solver/lem_busy_path.c \
-			src/solver/lem_is_busy.c
+			src/solver/lem_is_busy.c \
+			src/solver/lem_is_possible.c \
+			src/solver/lem_multiple_paths.c
 CFLAGS	=	-Wall -Wextra -Werror
 DEBUG	=	-g3
 NOFLAGS =	-Wno-format

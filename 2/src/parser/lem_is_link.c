@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 17:59:40 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/26 16:58:54 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/02 17:47:13 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,29 @@ void 	lem_set_link(t_room *room1, t_room *room2)
 
 int		lem_is_link(char *line)
 {
-	t_room	*tmp1;
-	t_room	*tmp2;
+	t_list	*tmp1;
+	t_list	*tmp2;
 	int		i;
 
 	i = -1;
+	tmp1 = NULL;
+	tmp2 = NULL;
 	while (line[++i])
 	{
 		if (line[i] != '-')
 			continue ;
 		line[i] = 0;
-		if (!(tmp1 = ft_lstfind(g_rooms, line, &cmp)->content)
-		||  !(tmp2 = ft_lstfind(g_rooms, &line[i + 1], &cmp)->content))
+		if (!(tmp1 = ft_lstfind(g_rooms, line, &cmp))
+		||  !(tmp2 = ft_lstfind(g_rooms, &line[i + 1], &cmp)))
 		{
 			line[i] = '-';
 			continue ;
 		}
-		lem_set_link(tmp1, tmp2);
+		lem_set_link(tmp1->content, tmp2->content);
 		break ;
 	}
+	if (!tmp1 || !tmp2)
+		return (0);
 	line[i] = '-';
 	return (1);
 }
