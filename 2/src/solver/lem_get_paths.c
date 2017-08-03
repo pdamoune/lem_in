@@ -73,14 +73,19 @@ int		lem_test_paths(t_list *path, t_room *room, int stop, int rayon)
 	links = room->links;
 	while (++rayon <= (int)ft_lstlen(g_rooms))
 	{
+
 		lem_get_path(path, room->links, room, rayon);
 		if (!g_paths)
 			continue ;
+		if (ft_lstlen(g_multiple_paths) == 8)
+			exit (0);
 		if (rayon == 2)
 		{
+			ft_lstadd_last(&g_multiple_paths, ft_lstptr(g_paths));
 			ft_printf("On jete tout dans end\n");
 			break ;
 		}
+		lem_display(1, "multiple");
 		multiple = NULL;
 		lem_multiple_paths(&multiple, g_paths, rayon);
 		lem_clr_path(g_rooms);

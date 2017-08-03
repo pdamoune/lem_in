@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 12:24:03 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/08/01 12:40:02 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/03 15:43:21 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static void	lem_weight(t_list *links, t_room *room)
 	while (links)
 	{
 		room = links->content;
-		if (room->position == END - 1)
-			room->weight = 0;
 		if (room->position < END - 1 && (room->weight > i || !room->busy))
 		{
 			room->busy = 1;
@@ -39,5 +37,6 @@ void 	lem_set_weight()
 	t_room	*room;
 
 	room = lem_get_end(g_rooms);
+	room->weight = 0;
 	lem_weight(room->links, room);
 }

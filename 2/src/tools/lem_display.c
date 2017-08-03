@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/08/02 19:32:33 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/03 15:27:53 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,30 @@ void 	lem_disp_paths(t_list *paths)
 	ft_printf("\n");
 	ft_printf("====================={eoc}\n\n");
 }
+
+void 	lem_multilist(t_list *paths)
+{
+	t_list	*path;
+
+	if (!g_paths)
+		return ;
+	ft_printf("%2c{cya}MULTILIST\n---------------------\n", 0);
+	if (!paths)
+		return ;
+	while (paths)
+	{
+		path = paths->content;
+		while (path)
+		{
+			ft_printf("%2s ", ((t_room *)path->content)->name);
+			ft_printf("|%d| - ", ((t_room *)path->content)->busy);
+			path = path->next;
+		}
+		ft_printf("\n");
+		paths = paths->next;
+	}
+}
+
 
 void 	lem_disp_list(t_list *paths)
 {
@@ -158,7 +182,8 @@ void 	lem_display(int args, ...)
 			lem_disp_mult_paths(g_multiple_paths);
 		if (!ft_strcmp("list", arg))
 			lem_disp_list(va_arg(ap, t_list *));
-
+		if (!ft_strcmp("multilist", arg))
+			lem_multilist(va_arg(ap, t_list *));
 		// if (!ft_strcmp("multiple", arg))
 	}
 	// ft_printf("{bla}=============== FIN DISPLAY =================\n\n{eoc}");
