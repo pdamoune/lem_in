@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/08/03 15:27:53 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/04 16:54:02 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void 	lem_disp_rooms(t_list *rooms)
 		ft_printf("|{mag}%d{eoc}| ", ((t_room *)rooms->content)->position);
 		ft_printf("|{red}%d{eoc}| ", ((t_room *)rooms->content)->busy);
 		ft_printf("|{gre}%-11d{eoc}| ", ((t_room *)rooms->content)->weight);
+		ft_printf("{cya}%-2d{eoc} | ", ((t_room *)rooms->content)->room_number);
 		ft_printf("{cya}%-10s{eoc} | ", ((t_room *)rooms->content)->name);
 		links = ((t_room *)rooms->content)->links;
 		while (links)
