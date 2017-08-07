@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/08/04 16:54:55 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/07 11:55:43 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void 	lem_disp_list(t_list *paths)
 	while (paths)
 	{
 		path = paths->content;
-		ft_printf("%5s - ", path->name);
+		ft_printf("{cya}|%-2d|{eoc}%5s - ", path->busy, path->name);
 		paths = paths->next;
 	}
 	ft_printf("\n");

@@ -42,7 +42,7 @@ int 	lem_get_path(t_list *path, t_list *links, t_room *room, int rayon)
 			ft_lstadd_last(&path, ft_lstptr(room_tmp));
 			if (lem_get_path(path, room_tmp->links, room_tmp, rayon))
 			{
-				ft_lstadd_last(&g_paths, ft_lstptr(ft_lstdup(path->next)));
+				ft_lstadd_last(&g_paths, ft_lstptr(ft_lstdup(path)));
 			}
 			ft_lstclr_last(&path);
 			len--;
