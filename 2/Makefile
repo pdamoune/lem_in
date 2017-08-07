@@ -6,11 +6,11 @@
 #    By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/26 22:40:04 by pdamoune          #+#    #+#              #
-#    Updated: 2017/08/02 15:08:35 by pdamoune         ###   ########.fr        #
+#    Updated: 2017/08/07 18:20:16 by pdamoune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	../lem_in
+NAME	=	lem-in
 SOURCES	=	src/main.c \
 			$(PATHLIB)/libft.a \
 			src/tools/lem_error.c \

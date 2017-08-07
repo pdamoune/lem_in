@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 16:23:48 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/08/07 11:55:43 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/07 18:28:02 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ void 	lem_disp_data(t_list *data)
 {
 	if (!data)
 		return ;
-	ft_printf("%2cDATA\n---------------------\n", 0);
+	// ft_printf("%2cDATA\n---------------------\n", 0);
 	while (data)
 	{
 		ft_printf("%s\n", data->content);
 		data = data->next;
 	}
-	ft_printf("=====================\n\n");
+	// ft_printf("=====================\n\n");
+	ft_printf("\n");
 }
 
 void 	lem_disp_rooms(t_list *rooms)

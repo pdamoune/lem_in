@@ -6,27 +6,11 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 11:25:38 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/08/07 15:09:01 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/07 19:02:10 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lem_in.h"
-
-int 	lem_len_multiple(t_list *multiple)
-{
-	int		len;
-	t_list	*tmp;
-
-	len = 0;
-	while (multiple)
-	{
-		tmp = multiple->content;
-		while ((tmp = tmp->next))
-			len++;
-		multiple = multiple->next;
-	}
-	return (len);
-}
 
 t_list	*lem_which_multiple(ants)
 {
@@ -46,25 +30,6 @@ t_list	*lem_which_multiple(ants)
 	return (multiple);
 }
 
-void 	lem_display_ants(t_list *paths)
-{
-	t_list	*ants;
-	t_room	*room;
-	int		i = 0;
-
-	while (paths)
-	{
-		i++;
-		ants = ((t_list *)paths->content)->next;
-		if (ants && (room = ants->content))
-		{
-			ft_printf("L%d-%s ", i, room->name);
-		}
-
-		paths = paths->next;
-	}
-}
-
 int		lem_send_ants(int ants)
 {
 	t_list	*path;
@@ -72,6 +37,7 @@ int		lem_send_ants(int ants)
 	t_list	*path_tmp2;
 	t_room	*room;
 	t_room	*next_room;
+	int i = 0;
 	// int		next;
 
 	// int i = 0;
@@ -85,12 +51,6 @@ int		lem_send_ants(int ants)
 	path = path_tmp;
 	ants = 0;
 	path_tmp2 = path_tmp;
-	// while (path_tmp2)
-	// {
-	// 	lem_display(1, "list", path_tmp2->content);
-	// 	path_tmp2 = path_tmp2->next;
-	// }
-	// int i = 0;
 	while (g_ants)
 	{
 		while (path_tmp)
@@ -102,23 +62,24 @@ int		lem_send_ants(int ants)
 				next_room = path->next->content;
 				if (!next_room->busy)
 				{
-					// lem_display(1, "list", path);
-					if (room->position == START - 1)
+					if (i)
+						ft_printf(" ");
+					if (next_room->position == END - 1)
 					{
-						ants++;
-						// ft_printf("start\n");
-						ft_printf("L%d-%s", ants, next_room->name);
-						next_room->busy = ants;
-						path_tmp->content = path->next;
-						path = path->next;
-					}
-					else if (next_room->position == END - 1)
-					{
-						// ft_printf("end\n");
+						if (room->position == START - 1)
+							room->busy = ++ants;
 						ft_printf("L%d-%s", room->busy, next_room->name);
 						room->busy = 0;
 						path_tmp->content = NULL;
 						g_ants--;
+					}
+					else if (room->position == START - 1)
+					{
+						ants++;
+						ft_printf("L%d-%s", ants, next_room->name);
+						next_room->busy = ants;
+						path_tmp->content = path->next;
+						path = path->next;
 					}
 					else
 					{
@@ -129,13 +90,14 @@ int		lem_send_ants(int ants)
 						path_tmp->content = path->next;
 						path = path->next;
 					}
-					ft_printf(" ");
+					i = 1;
 				}
 				// lem_display(1, "list", path);
 			}
 			path_tmp = path_tmp->next;
 		}
 		ft_putendl("");
+		i = 0;
 		path_tmp = path_tmp2;
 	}
 	return (0);
@@ -147,7 +109,7 @@ int		main(void)
 	lem_parser();
 	lem_set_weight();
 	lem_solver();
-	lem_display(2, "rooms", "multiple");
+	lem_display(1, "multiple", g_data);
 	lem_send_ants(g_ants);
 
 	// lem_display(1, "multiple");
