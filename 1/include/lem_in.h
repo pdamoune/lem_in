@@ -5,80 +5,71 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/15 10:42:00 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/07/10 11:29:54 by pdamoune         ###   ########.fr       */
+/*   Created: 2017/07/10 11:25:19 by pdamoune          #+#    #+#             */
+/*   Updated: 2017/08/04 16:20:21 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 # include "../libft/include/libft.h"
+# include "lem_error.h"
 # define NOT_COM		0
 # define COM			1
 # define START			2
 # define END			3
-# define BAD_LINE		(1 << 1)
-# define BAD_ANTS		(1 << 2)
-// # define ERROR
 
-typedef struct s_data	t_data;
 typedef struct s_room	t_room;
 typedef struct s_link	t_link;
-typedef struct s_path	t_path;
-typedef struct s_error	t_error;
 
-struct		s_data
-{
-	int			ants;
-	int			map[2];
-	char		**graph;
-	t_list	*list_paths;
-	t_list	*list_data;
-	t_list	*list_rooms;
-	t_list	*list_links;
-};
-
-struct		s_room
+struct	s_room
 {
 	char	*name;
-	int		rm_nb;
-	int		pos;
+	int		room_number;
+	int		position;
 	int		busy;
-	long	x;
-	long	y;
+	int		weight;
+	int		coor[2];
 	t_list	*links;
 };
 
-struct		s_link
-{
-	char	*room1;
-	char	*room2;
-};
+t_list	*g_data;
+t_list	*g_rooms;
+t_list	*g_paths;
+t_list	*g_multiple_paths;
+int		g_ants;
+int		g_nb_rooms;
 
-struct		s_path
-{
-	char	*name;
-};
-
-struct		s_error
-{
-	int		gnl;
-	int		ants;
-	int		rooms;
-	int		links;
-};
-
-t_data	*lem_data(void);
-void	lem_error(t_error *error);
+void	lem_set_globales(void);
+void 	lem_display(int args, ...);
+void	lem_free(int err);
 int		main(void);
-int		lem_parsing(t_data *data);
+
+/*
+** Parser.
+*/
+
+int		lem_parser(void);
+int		lem_get_data(void);
+int		lem_get_ants(t_list *data);
+int		lem_get_rooms(void);
 int		lem_is_com(char *line);
-int		lem_is_room(t_data *data, t_room *room, char *line);
-int		lem_is_link(t_list *l_rooms, t_link *link, char *line);
-int		lem_get_rooms(t_data *data, t_list *list_data, t_list **list_rooms);
-int		lem_get_links(t_data *data, t_list *list_data, t_list *l_rooms, t_list **l_links);
-int		lem_get_data(t_list **data);
-int		lem_get_ants(t_list *data, int *ants);
-void 	lem_display(t_data *all_data, t_list *datas, t_list *rooms, t_list *links, int i);
+int		lem_is_room(t_room *room, char *line);
+int		lem_is_link(char *line);
+
+/*
+** Solver.
+*/
+
+int		lem_solver(void);
+t_room	*lem_get_start(t_list *rooms);
+t_room	*lem_get_end(t_list *rooms);
+int		lem_get_paths(void);
+void	lem_set_weight(void);
+void 	lem_clr_path(t_list *path);
+void 	lem_busy_path(t_list *path);
+int 	lem_is_busy(t_list *path);
+int 	lem_is_possible(t_list *path, int rayon);
+int		lem_multiple_paths(t_list **multiple, t_list *paths, int len);
 
 #endif
