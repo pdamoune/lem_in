@@ -6,7 +6,7 @@
 /*   By: pdamoune <pdamoune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 14:09:36 by pdamoune          #+#    #+#             */
-/*   Updated: 2017/08/07 18:18:02 by pdamoune         ###   ########.fr       */
+/*   Updated: 2017/08/08 20:45:27 by pdamoune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ void 		lem_free_data(t_list *data, t_list *rooms)
 void		lem_free(int err)
 {
 	err <= NEG_ANTS ? lem_free_data(g_data, g_rooms) : 0;
+	if (err)
+		ft_printf("ERROR\n");
 	exit (-1);
 }
